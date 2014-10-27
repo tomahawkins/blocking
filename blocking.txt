@@ -1,0 +1,48 @@
+A Blocking Strategy for Volleyball: Don't
+
+  Is blocking more of a risk than an advantage?
+
+
+Possible advantages to not blocking:
+
+- Adds two more defenders to dig.  Lowers floor area for each defender to cover.
+- Blockers don't have time to correct after the ball is hit.  Floor defenders do.
+- Lowers effectiveness of offensives hitting strategies.
+  - Nearly all hitting strategies are aimed an undermining blocker, not digging defense.
+    - 1s, 31s, slides, cross, shoot, dumps are all designed to catch blockers off guard.
+- Removes touch-out-of-bounds point losses.
+- Removes wiping hitting strategy, i.e. blockers getting "used".
+- Lowers net incursions.  Blockers have high percentage of net violations.
+- Leniency of 2-hit rules.  First on hard driven balls, now on first team contact.
+    - Gives significant advantage to digging defense.
+- Safety.
+  - Ankle rolls are primarily caused by blockers colliding.
+  - Most finger jams are from blocking.
+
+
+Clear disadvantages of not blocking:
+
+- Hitters can attack unopposed at the net.
+- Setters can intentionally set tight for hitters to hit straight down.
+- Loss of the four hit advantage.
+- Loss of the ability for the block to absorb energy.
+
+
+Open Questions:
+
+- Do the pros outweigh the cons?
+- If this is true, has this always been the case or did it change with "minor" shifts in rules, i.e. 2-hit rules.
+- Does this strategy hold of in different divisions?
+  - Mens' leagues:  Is hitting too strong not to block?
+- Is the optimal defense a mixed strategy?
+  - Single blockers randomly issued and only when the ball is tight.
+
+
+Generalizing the Problem:  Finding and Exploiting Flaws in Conventional Wisdom
+
+- Conventional Wisdom hold inertia.  It's slow to change over time.
+- Seemingly small changes in environment (e.g. rule changes) can lead to large changes
+  in optimal strategies.  This can produce flaws in conventional wisdom.
+- How do you identify conventional wisdom in different domains?
+- How do you identify the changes that may invalidate conventional wisdom.
+
