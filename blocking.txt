@@ -7,6 +7,7 @@ Possible advantages to not blocking:
 
 - Adds two more defenders to dig.  Lowers floor area for each defender to cover.
 - Blockers don't have time to correct after the ball is hit.  Floor defenders do.
+- Floor defenders can line up a hit, but have a hard time adjusting a hit deflected by a block.
 - Lowers effectiveness of offensives hitting strategies.
   - Nearly all hitting strategies are aimed an undermining blocker, not digging defense.
     - 1s, 31s, slides, cross, shoot, dumps are all designed to catch blockers off guard.
