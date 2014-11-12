@@ -27,7 +27,7 @@ main :: IO ()
 main = do
   args <- getArgs
   attacks <- mapM readFile args >>= return . map parseMatch
-  let report' = report attacks
+  let report' = report (attacks ++ [concat attacks])
   report' "Blocks touched   of all blocks      " blockTouched  blockAttempt
   putStrLn ""
   report' "Win point        of all blocks      " winPoint      blockAttempt
