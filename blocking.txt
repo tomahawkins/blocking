@@ -5,23 +5,27 @@ A Blocking Strategy for Volleyball: Don't
 
 Possible advantages to not blocking:
 
-- Adds two more defenders to dig.  Lowers floor area for each defender to cover.
+- Adds 2 to 3 more defenders to dig.  Lowers floor area for each defender to cover.
 - Blockers don't have time to correct after the ball is hit.  Floor defenders do.
 - Floor defenders can line up a hit, but have a hard time adjusting a hit deflected by a block.
 - Lowers effectiveness of offensives hitting strategies.
   - Nearly all hitting strategies are aimed an undermining blocker, not digging defense.
     - 1s, 31s, slides, cross, shoot, dumps are all designed to catch blockers off guard.
+  - In particular, setting dumps are effective because the go over the blockers at the
+    net and into the doughnut.  But if the blockers are off the net in floor defense,
+    dump will come directly at them.
 - Removes touch-out-of-bounds point losses.
 - Removes wiping hitting strategy, i.e. blockers getting "used".
 - Lowers net incursions.  Blockers have high percentage of net violations.
 - Leniency of 2-hit rules.  First on hard driven balls, now on first team contact.
     - Gives significant advantage to digging defense.
+- A touched block takes away 2-hit first contact advantage (Is this true by the rules?).
 - Safety.
   - Ankle rolls are primarily caused by blockers colliding.
   - Most finger jams are from blocking.
 
 
-Clear disadvantages of not blocking:
+Disadvantages of not blocking:
 
 - Hitters can attack unopposed at the net.
 - Setters can intentionally set tight for hitters to hit straight down.
@@ -33,11 +37,12 @@ Open Questions:
 
 - Do the pros outweigh the cons?
 - If this is true, has this always been the case or did it change with "minor" shifts in rules, i.e. 2-hit rules.
-- Does this strategy hold of in different divisions?
-  - Mens' leagues:  Is hitting too strong not to block?
+- At what point in the spectrum of play (elementary to Olympic mens) does blocking become important?
 - Is the optimal defense a mixed strategy?
   - Single blockers randomly issued and only when the ball is tight.
-
+- What is the best offense to a non or minimal blocking defense?
+- What is the best way to prove/disprove this theory when the only
+  datasets are played with conventional strategies?
 
 Generalizing the Problem:  Finding and Exploiting Flaws in Conventional Wisdom
 
@@ -46,4 +51,47 @@ Generalizing the Problem:  Finding and Exploiting Flaws in Conventional Wisdom
   in optimal strategies.  This can produce flaws in conventional wisdom.
 - How do you identify conventional wisdom in different domains?
 - How do you identify the changes that may invalidate conventional wisdom.
+
+
+
+
+The Mental Game:  Psychology
+
+The difference between a good day and a bad day is far greater than
+improvement gained by a year's worth of training.
+
+Performing well and performing badly are not random events.  They always come in sets.
+
+How can we maximize psychological effectiveness?
+How can we increase the likelihood that we feel good and our game is on when it is time to play?
+
+- Cheering each other on, group huddles, etc.
+  - But can overdoing it be a detriment?
+- Caffeine.  A cup of chai right before the game.
+
+How does the emotional rollercoaster work?  What are the cycles of ups and downs?
+- Probably not possible to maintain an up for an entire match/tournament.
+- Can we control ups and downs?
+  - Ensure we trade points on a lull (but not lose a run).
+  - Induce an up only at the right times when it is critical.
+- Does a down increase the likelihood of a future up?
+
+What is the most effective way to lose a match?  If you know you are going to lose
+a set, is there anything you can do in the loss to increase the likelihood of a 
+win in the next set?
+- Does a late game rally by the starters do anything to help next game, or does it hurt?
+  - An up and then a down followed by a break between sets.
+  - Would it be better to sub in the second string and give the first string
+    a longer break (so they can drink some chai)?
+
+Maximize comfort, minimize irritants.
+- Spandex shorts.
+  - They're always riding up, players are always pulling them down.
+  - Do they really help defense and rolling digs?
+  - A barrier to entry:
+    - How many talented girls did not get into volleyball because
+      the shorts made them feel uncomfortable?
+    - Volleyball doesn't take years of practice to get good.  Case in point: Dane Hansen
+      - How many Clarion basketball players could become great volleyball players,
+        but won't because of the shorts?
 

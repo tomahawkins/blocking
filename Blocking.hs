@@ -4,93 +4,101 @@ import Data.List
 import System.Environment
 import Text.Printf
 
-data Block
-  = NoBlock
-  | BlockTouch Int
-  | BlockMiss  Int
-  deriving Show
+import Match
 
-data Result
-  = WinPoint
-  | LostPoint
-  | DefenseAttack
-  | DefenseFreeBall
-  | OffenseAttack
-  | OffenseFreeBall
-  deriving Show
-
-type Attack = (Block, Result)
-
-type Condition = Attack -> Bool
+type Condition = Block -> Bool
 
 main :: IO ()
 main = do
-  args <- getArgs
-  attacks <- mapM readFile args >>= return . map parseMatch
-  let report' = report (attacks ++ [concat attacks])
-  report' "Blocks touched   of all blocks      " blockTouched  blockAttempt
+  files <- getArgs
+  blocks <- mapM readFile files >>= return . map parseBlocks
+  let report' = report (blocks ++ [concat blocks])
+  report' "Combined advantage gained by 0 blockers      " gainAdvantage b0
+  report' "Combined advantage gained by 1 blockers      " gainAdvantage b1
+  report' "Combined advantage gained by 2 blockers      " gainAdvantage b2
   putStrLn ""
-  report' "Win point        of all blocks      " winPoint      blockAttempt
-  report' "Lost point       of all blocks      " lostPoint     blockAttempt
+  report' "Team A   advantage gained by 0 blockers      " gainAdvantage (b0  `and'` teamA)
+  report' "Team A   advantage gained by 1 blockers      " gainAdvantage (b1  `and'` teamA)
+  report' "Team A   advantage gained by 2 blockers      " gainAdvantage (b2  `and'` teamA)
   putStrLn ""
-  report' "Win point        of blocks touched  " winPoint      blockTouched
-  report' "Lost point       of blocks touched  " lostPoint     blockTouched
+  report' "Team B   advantage gained by 0 blockers      " gainAdvantage (b0  `and'` teamB)
+  report' "Team B   advantage gained by 1 blockers      " gainAdvantage (b1  `and'` teamB)
+  report' "Team B   advantage gained by 2 blockers      " gainAdvantage (b2  `and'` teamB)
   putStrLn ""
-  report' "Win point        of blocks missed   " winPoint      blockMissed
-  report' "Lost point       of blocks missed   " lostPoint     blockMissed
-  putStrLn ""
-  report' "Gained advantage of all blocks      " gainAdvantage blockAttempt
-  report' "Gained advantage of blocks touched  " gainAdvantage blockTouched
-  report' "Gained advantage of blocks missed   " gainAdvantage blockMissed
-  putStrLn ""
-  report' "Gained advantage of with no blockers" gainAdvantage noBlockers
-  report' "Gained advantage of with 1 blocker  " gainAdvantage oneBlocker
-  report' "Gained advantage of with 2 blockers " gainAdvantage twoBlockers
 
-report :: [[Attack]] -> String -> Condition -> Condition -> IO ()
-report attacks msg a b = putStrLn $ msg ++ " : " ++ intercalate "  " [ printf "%3.0f%% (%3d)" (percentage attacks a b) (sampleSize attacks b) | attacks <- attacks ]
-
--- Conditions.
-winPoint        (_, r) = case r of { WinPoint  -> True; _ -> False }
-lostPoint       (_, r) = case r of { LostPoint -> True; _ -> False }
-gainAdvantage   (_, r) = case r of { WinPoint -> True; DefenseAttack -> True; OffenseFreeBall -> True; _ -> False }
-blockTouched    (b, _) = case b of { BlockTouch _ -> True; _ -> False }
-blockMissed     (b, _) = case b of { BlockMiss  _ -> True; _ -> False }
-blockAttempt    (b, _) = case b of { BlockTouch _ -> True; BlockMiss _ -> True; NoBlock -> False }
---allAttacks             = const True
---lostAdvantage          = not . gainAdvantage
---noBlockOrMissed        = not . blockTouched
---noBlock                = not . blockAttempt
-
-noBlockers  (b, _) = case b of { NoBlock -> True; _ -> False }
-oneBlocker  (b, _) = case b of { BlockTouch 1 -> True; _ -> False }
-twoBlockers (b, _) = case b of { BlockTouch 2 -> True; _ -> False }
-
-percentage :: [Attack] -> Condition -> Condition -> Double
-percentage attacks a b = 100 * fromIntegral (length a') / fromIntegral (length b')
+swapTeams :: Match -> Match
+swapTeams a = case a of
+  a : b : c -> a : set b : swapTeams c
+  a -> a
   where
-  b' = filter b attacks
+  set :: Set -> Set
+  set (Set a b) = Set (map volley a) $ team b
+
+  volley :: Volley -> Volley
+  volley (Volley a b) = Volley (team a) $ map attack b
+
+  attack :: Attack -> Attack
+  attack (Attack a b) = Attack (team a) b
+
+  team :: Team -> Team
+  team A = B
+  team B = A
+
+data Volley' = Volley' Team [Attack] Team deriving Show
+
+parseVolleys' :: String -> [Volley']
+parseVolleys' = concatMap volleys' . swapTeams . parseMatch
+  where
+  volleys' :: Set -> [Volley']
+  volleys' (Set a w) = f a
+    where
+    f :: [Volley] -> [Volley']
+    f a = case a of
+      [] -> []
+      Volley a b : []                    -> Volley' a b w : []
+      Volley a b : d@(Volley c _) : rest -> Volley' a b c : f (d : rest)
+
+data Block = Block Team Int Bool
+
+parseBlocks :: String -> [Block]
+parseBlocks = concatMap blockOutcomes . parseVolleys'
+
+blockOutcomes :: Volley' -> [Block]
+blockOutcomes (Volley' _ a winner) = f a
+  where
+  f a = case a of
+    [] -> []
+    [Attack side n] -> [Block (other side) n $ xor side winner]
+    Attack side n : a@(Attack side' _) : rest -> Block (other side) n (xor side side') : f (a : rest)
+  other a = case a of
+    A -> B
+    B -> A
+  xor a b = case (a, b) of
+    (A, A) -> False
+    (B, B) -> False
+    _ -> True
+
+report :: [[Block]] -> String -> Condition -> Condition -> IO ()
+report blocks msg a b = putStrLn $ msg ++ " : " ++ intercalate " " [ printf "%3.0f%% (%3d)" (percentage blocks a b) (sampleSize blocks b) | blocks <- blocks ]
+
+gainAdvantage (Block _ _ a) = a
+b0  (Block _ a _) = a == 0
+b1  (Block _ a _) = a == 1
+b2  (Block _ a _) = a == 2
+b01 (Block _ a _) = a == 0 || a == 1
+b12 (Block _ a _) = a == 1 || a == 2
+teamA (Block a _ _) = a == A
+teamB (Block a _ _) = a == B
+
+and' :: Condition -> Condition -> Condition
+and' a b x = a x && b x
+
+percentage :: [Block] -> Condition -> Condition -> Double
+percentage blocks a b = 100 * fromIntegral (length a') / fromIntegral (length b')
+  where
+  b' = filter b blocks
   a' = filter a b'
 
-sampleSize :: [Attack] -> Condition -> Int
-sampleSize attacks a = length $ filter a attacks
-
-parseMatch :: String -> [Attack]
-parseMatch = map parseAttack . words . unlines . map (takeWhile (/= '#')) . lines
-
-parseAttack :: String -> Attack
-parseAttack a = case a of
-  n : 't' : r | elem n "123" -> (BlockTouch $ read [n], parseResult r)
-  n : 'm' : r | elem n "123" -> (BlockMiss  $ read [n], parseResult r)
-  r                          -> (NoBlock,             parseResult r)
-
-parseResult :: String -> Result
-parseResult a = case a of
-  "w"  -> WinPoint
-  "l"  -> LostPoint
-  "da" -> DefenseAttack
-  "df" -> DefenseFreeBall
-  "oa" -> OffenseAttack
-  "of" -> OffenseFreeBall
-  _ -> error $ "Invalid result: " ++ a
+sampleSize :: [Block] -> Condition -> Int
+sampleSize blocks a = length $ filter a blocks
 
