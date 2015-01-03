@@ -16,14 +16,17 @@ main = do
   report' "Combined advantage gained by 0 blockers      " gainAdvantage b0
   report' "Combined advantage gained by 1 blockers      " gainAdvantage b1
   report' "Combined advantage gained by 2 blockers      " gainAdvantage b2
+  report' "Combined advantage gained by 3 blockers      " gainAdvantage b3
   putStrLn ""
   report' "Team A   advantage gained by 0 blockers      " gainAdvantage (b0  `and'` teamA)
   report' "Team A   advantage gained by 1 blockers      " gainAdvantage (b1  `and'` teamA)
   report' "Team A   advantage gained by 2 blockers      " gainAdvantage (b2  `and'` teamA)
+  report' "Team A   advantage gained by 3 blockers      " gainAdvantage (b3  `and'` teamA)
   putStrLn ""
   report' "Team B   advantage gained by 0 blockers      " gainAdvantage (b0  `and'` teamB)
   report' "Team B   advantage gained by 1 blockers      " gainAdvantage (b1  `and'` teamB)
   report' "Team B   advantage gained by 2 blockers      " gainAdvantage (b2  `and'` teamB)
+  report' "Team B   advantage gained by 3 blockers      " gainAdvantage (b3  `and'` teamB)
   putStrLn ""
 
 swapTeams :: Match -> Match
@@ -85,6 +88,7 @@ gainAdvantage (Block _ _ a) = a
 b0  (Block _ a _) = a == 0
 b1  (Block _ a _) = a == 1
 b2  (Block _ a _) = a == 2
+b3  (Block _ a _) = a == 3
 b01 (Block _ a _) = a == 0 || a == 1
 b12 (Block _ a _) = a == 1 || a == 2
 teamA (Block a _ _) = a == A
