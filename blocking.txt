@@ -43,6 +43,8 @@ Open Questions:
 - What is the best offense to a non or minimal blocking defense?
 - What is the best way to prove/disprove this theory when the only
   datasets are played with conventional strategies?
+- If deploying a minimal blocking defense, what is the best way to mask it?
+  - Three blockers with hands up at every serve.
 
 Generalizing the Problem:  Finding and Exploiting Flaws in Conventional Wisdom
 
@@ -76,13 +78,13 @@ How does the emotional rollercoaster work?  What are the cycles of ups and downs
   - Induce an up only at the right times when it is critical.
 - Does a down increase the likelihood of a future up?
 
-What is the most effective way to lose a match?  If you know you are going to lose
+What is the best way to lose a match?  If you know you are going to lose
 a set, is there anything you can do in the loss to increase the likelihood of a 
 win in the next set?
 - Does a late game rally by the starters do anything to help next game, or does it hurt?
   - An up and then a down followed by a break between sets.
   - Would it be better to sub in the second string and give the first string
-    a longer break (so they can drink some chai)?
+    a longer break and let the second string absorb the loss?
 
 Maximize comfort, minimize irritants.
 - Spandex shorts.
