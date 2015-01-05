@@ -46,6 +46,13 @@ Open Questions:
 - If deploying a minimal blocking defense, what is the best way to mask it?
   - Three blockers with hands up at every serve.
 
+
+
+Links:
+
+- http://www.goldmedalsquared.com/blog/2013/06/to-block-or-not-to-block/
+- volleymetrics.blogspot.com
+
 Generalizing the Problem:  Finding and Exploiting Flaws in Conventional Wisdom
 
 - Conventional Wisdom hold inertia.  It's slow to change over time.
@@ -54,6 +61,13 @@ Generalizing the Problem:  Finding and Exploiting Flaws in Conventional Wisdom
 - How do you identify conventional wisdom in different domains?
 - How do you identify the changes that may invalidate conventional wisdom.
 
+
+Other Alternative Strategies
+
+- Early analysis should touched blocks failed more than non-touched blocks.
+  - Have hitters target blockers directly.
+- Attack in 2.
+  - Setter dumps are very effective.
 
 
 

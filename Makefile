@@ -1,6 +1,11 @@
 .PHONY: all
 all: blocking
-	blocking clarion-iup.match tampa-wju-2014.match tampa-fortsmith-2014.match tampa-sw-minn-2014.match
+	blocking \
+	  clarion-iup.match \
+	  tampa-wju-2014.match \
+	  tampa-fortsmith-2014.match \
+	  tampa-sw-minn-2014.match \
+	  penn-stanford-2014.match
 
 Match.hs: Match.y
 	happy Match.y
