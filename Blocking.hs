@@ -5,29 +5,45 @@ import System.Environment
 import Text.Printf
 
 import Match
+import Touches
 
 type Condition = Block -> Bool
 
 main :: IO ()
 main = do
-  files <- getArgs
-  blocks <- mapM readFile files >>= return . map parseBlocks
-  let report' = report (blocks ++ [concat blocks])
-  report' "Combined advantage gained by 0 blockers      " gainAdvantage b0
-  report' "Combined advantage gained by 1 blockers      " gainAdvantage b1
-  report' "Combined advantage gained by 2 blockers      " gainAdvantage b2
-  report' "Combined advantage gained by 3 blockers      " gainAdvantage b3
-  putStrLn ""
-  report' "Team A   advantage gained by 0 blockers      " gainAdvantage (b0  `and'` teamA)
-  report' "Team A   advantage gained by 1 blockers      " gainAdvantage (b1  `and'` teamA)
-  report' "Team A   advantage gained by 2 blockers      " gainAdvantage (b2  `and'` teamA)
-  report' "Team A   advantage gained by 3 blockers      " gainAdvantage (b3  `and'` teamA)
-  putStrLn ""
-  report' "Team B   advantage gained by 0 blockers      " gainAdvantage (b0  `and'` teamB)
-  report' "Team B   advantage gained by 1 blockers      " gainAdvantage (b1  `and'` teamB)
-  report' "Team B   advantage gained by 2 blockers      " gainAdvantage (b2  `and'` teamB)
-  report' "Team B   advantage gained by 3 blockers      " gainAdvantage (b3  `and'` teamB)
-  putStrLn ""
+  args <- getArgs
+  case args of
+    [] -> return ()
+    "-t" : files -> do
+      attacks <- mapM readFile files >>= return . concatMap parseTouches
+      let percent a b = 100 * fromIntegral (length $ filter a $ filter b attacks) / fromIntegral (length $ filter b attacks)
+          sampleSize a = length $ filter a attacks
+          advantage (_, a) = a
+          touched   (a, _) = a
+          missed    (a, _) = not a
+          report msg a b = printf "%s  %3.0f%%  (%d)\n" msg (percent a b :: Double) (sampleSize b)
+      report "Advantage of all blocks    " advantage (const True) 
+      report "Advantage of touched blocks" advantage touched
+      report "Advantage of missed  blocks" advantage missed
+    files -> do
+      blocks <- mapM readFile files >>= return . map parseBlocks
+      let report'  = report blocks
+      let report'' = report [concat blocks]
+      report' "Team A   advantage gained by 0 blockers      " gainAdvantage (b0  `and'` teamA)
+      report' "Team A   advantage gained by 1 blockers      " gainAdvantage (b1  `and'` teamA)
+      report' "Team A   advantage gained by 2 blockers      " gainAdvantage (b2  `and'` teamA)
+      report' "Team A   advantage gained by 3 blockers      " gainAdvantage (b3  `and'` teamA)
+      putStrLn ""
+      report' "Team B   advantage gained by 0 blockers      " gainAdvantage (b0  `and'` teamB)
+      report' "Team B   advantage gained by 1 blockers      " gainAdvantage (b1  `and'` teamB)
+      report' "Team B   advantage gained by 2 blockers      " gainAdvantage (b2  `and'` teamB)
+      report' "Team B   advantage gained by 3 blockers      " gainAdvantage (b3  `and'` teamB)
+      putStrLn ""
+      report'' "Combined advantage gained by 0 blockers      " gainAdvantage b0
+      report'' "Combined advantage gained by 1 blockers      " gainAdvantage b1
+      report'' "Combined advantage gained by 2 blockers      " gainAdvantage b2
+      report'' "Combined advantage gained by 3 blockers      " gainAdvantage b3
+      putStrLn ""
 
 swapTeams :: Match -> Match
 swapTeams a = case a of

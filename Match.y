@@ -28,6 +28,7 @@ parseMatch = match . concat . words . unlines . map (takeWhile (/= '#')) . lines
 %token
 
 "."           { '.' }
+";"           { ';' }
 "a"           { 'a' }
 "b"           { 'b' }
 "s"           { 's' }
@@ -65,7 +66,8 @@ Attacks :: { [Attack] }
 | Attacks Attack { $1 ++ [$2] }
 
 Attack :: { Attack }
-: Team Blockers { Attack $1 $2 }
+: Team     Blockers { Attack $1 $2 }
+| Team ";" Blockers { Attack $1 $3 }  -- Attack on 2.
 
 Blockers :: { Int }
 : "0" { 0 }

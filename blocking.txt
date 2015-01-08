@@ -1,6 +1,7 @@
 A Blocking Strategy for Volleyball: Don't
 
-  Is blocking more of a risk than an advantage?
+
+Is blocking more of a risk than an advantage?
 
 
 Possible advantages to not blocking:
@@ -8,21 +9,20 @@ Possible advantages to not blocking:
 - Adds 2 to 3 more defenders to dig.  Lowers floor area for each defender to cover.
 - Blockers don't have time to correct after the ball is hit.  Floor defenders do.
 - Floor defenders can line up a hit, but have a hard time adjusting a hit deflected by a block.
+- Eliminates touch-out-of-bounds point losses.
+  - Eliminates wiping hitting strategy and blockers getting "used".
 - Lowers effectiveness of offensives hitting strategies.
-  - Nearly all hitting strategies are aimed an undermining blocker, not digging defense.
+  - Nearly all hitting strategies are aimed an undermining blocker, not floor defense.
     - 1s, 31s, slides, cross, shoot, dumps are all designed to catch blockers off guard.
-  - In particular, setting dumps are effective because the go over the blockers at the
-    net and into the doughnut.  But if the blockers are off the net in floor defense,
-    dump will come directly at them.
-- Removes touch-out-of-bounds point losses.
-- Removes wiping hitting strategy, i.e. blockers getting "used".
+  - In particular, setting dumps are effective because the go over unsuspecting blockers
+    and into the doughnut.  But if the blockers are off the net in floor defense,
+    dumps will be less effective.
 - Lowers net incursions.  Blockers have high percentage of net violations.
 - Leniency of 2-hit rules.  First on hard driven balls, now on first team contact.
     - Gives significant advantage to digging defense.
-- A touched block takes away 2-hit first contact advantage (Is this true by the rules?).
-- Safety.
-  - Ankle rolls are primarily caused by blockers colliding.
-  - Most finger jams are from blocking.
+- A touched block takes away advantage of 2-hit first contact.  (Is a block a "first team contact"?)
+- Safety and improved team health.
+  - Ankle rolls and finger jams are are primarily caused by blocking.
 
 
 Disadvantages of not blocking:
@@ -30,28 +30,40 @@ Disadvantages of not blocking:
 - Hitters can attack unopposed at the net.
 - Setters can intentionally set tight for hitters to hit straight down.
 - Loss of the four hit advantage.
-- Loss of the ability for the block to absorb energy.
+  - Loss of the ability for the block to absorb energy.
 
 
 Open Questions:
 
 - Do the pros outweigh the cons?
 - If this is true, has this always been the case or did it change with "minor" shifts in rules, i.e. 2-hit rules.
-- At what point in the spectrum of play (elementary to Olympic mens) does blocking become important?
+- At what point in the spectrum of play (elementary school to olympic level) does blocking become important?
 - Is the optimal defense a mixed strategy?
   - Single blockers randomly issued and only when the ball is tight.
-- What is the best offense to a non or minimal blocking defense?
-- What is the best way to prove/disprove this theory when the only
-  datasets are played with conventional strategies?
+- What is the best offense to counter a non or minimal blocking defense?
 - If deploying a minimal blocking defense, what is the best way to mask it?
   - Three blockers with hands up at every serve.
+- What is the best way to validate/invalidate this theory when the only
+  datasets are played with conventional strategies?
+- This analysis is based on the assumption that attacking is an advantage
+  and that future events in a volley are irrelevent.  Is this valid?
 
+Other analysis:
+
+- Geometry of hitting ball and court to determine optimal placement of floor defense.
+  - Most hits land behind 5 meters from attacker.  Measure this statistic in real games.
+    - Some players can hit closer, aka "straight down", but this is uncommon in games.
+- How accurate is setting based on distance from net?
+  - Can a setter consistantly put it close to the net in real games?
+- Pie slice vs. reaction time:
+  - Up close a blockers hand covers a lot of area, but they can't react after the ball is hit.
+  - A floor defender covers less area, but they have much more time to react.
 
 
 Links:
 
 - http://www.goldmedalsquared.com/blog/2013/06/to-block-or-not-to-block/
-- volleymetrics.blogspot.com
+- http://volleymetrics.blogspot.com
 
 Generalizing the Problem:  Finding and Exploiting Flaws in Conventional Wisdom
 
@@ -64,50 +76,11 @@ Generalizing the Problem:  Finding and Exploiting Flaws in Conventional Wisdom
 
 Other Alternative Strategies
 
-- Early analysis should touched blocks failed more than non-touched blocks.
-  - Have hitters target blockers directly.
+- Early analysis showed touched blocks failed more than non-touched blocks.
+  - Should hitters target blockers more that the open court?
+  - What is the most effective hit to exploit blockers?
+    - Blockers can only direct a block down if their hands are angled, i.e. penetrating the net.
 - Attack in 2.
-  - Setter dumps are very effective.
-
-
-
-The Mental Game:  Psychology
-
-The difference between a good day and a bad day is far greater than
-improvement gained by a year's worth of training.
-
-Performing well and performing badly are not random events.  They always come in sets.
-
-How can we maximize psychological effectiveness?
-How can we increase the likelihood that we feel good and our game is on when it is time to play?
-
-- Cheering each other on, group huddles, etc.
-  - But can overdoing it be a detriment?
-- Caffeine.  A cup of chai right before the game.
-
-How does the emotional rollercoaster work?  What are the cycles of ups and downs?
-- Probably not possible to maintain an up for an entire match/tournament.
-- Can we control ups and downs?
-  - Ensure we trade points on a lull (but not lose a run).
-  - Induce an up only at the right times when it is critical.
-- Does a down increase the likelihood of a future up?
-
-What is the best way to lose a match?  If you know you are going to lose
-a set, is there anything you can do in the loss to increase the likelihood of a 
-win in the next set?
-- Does a late game rally by the starters do anything to help next game, or does it hurt?
-  - An up and then a down followed by a break between sets.
-  - Would it be better to sub in the second string and give the first string
-    a longer break and let the second string absorb the loss?
-
-Maximize comfort, minimize irritants.
-- Spandex shorts.
-  - They're always riding up, players are always pulling them down.
-  - Do they really help defense and rolling digs?
-  - A barrier to entry:
-    - How many talented girls did not get into volleyball because
-      the shorts made them feel uncomfortable?
-    - Volleyball doesn't take years of practice to get good.  Case in point: Dane Hansen
-      - How many Clarion basketball players could become great volleyball players,
-        but won't because of the shorts?
+  - How effective are setter dumps and attacks on the 2nd touch?
+  - How well could an offense apply attack-in-2?
 
