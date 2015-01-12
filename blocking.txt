@@ -1,6 +1,5 @@
 A Blocking Strategy for Volleyball: Don't
 
-
 Is blocking more of a risk than an advantage?
 
 
@@ -20,7 +19,6 @@ Possible advantages to not blocking:
 - Lowers net incursions.  Blockers have high percentage of net violations.
 - Leniency of 2-hit rules.  First on hard driven balls, now on first team contact.
     - Gives significant advantage to digging defense.
-- A touched block takes away advantage of 2-hit first contact.  (Is a block a "first team contact"?)
 - Safety and improved team health.
   - Ankle rolls and finger jams are are primarily caused by blocking.
 
@@ -47,6 +45,8 @@ Open Questions:
   datasets are played with conventional strategies?
 - This analysis is based on the assumption that attacking is an advantage
   and that future events in a volley are irrelevent.  Is this valid?
+  - What happens when the "advantage" of blocking exceeds 50%?
+    Does this imply attacking is no longer an advantage?
 
 Other analysis:
 
@@ -58,20 +58,12 @@ Other analysis:
 - Pie slice vs. reaction time:
   - Up close a blockers hand covers a lot of area, but they can't react after the ball is hit.
   - A floor defender covers less area, but they have much more time to react.
-
+- What is the correlation between number of attacks in a volley and winning a volley?
 
 Links:
 
 - http://www.goldmedalsquared.com/blog/2013/06/to-block-or-not-to-block/
 - http://volleymetrics.blogspot.com
-
-Generalizing the Problem:  Finding and Exploiting Flaws in Conventional Wisdom
-
-- Conventional Wisdom hold inertia.  It's slow to change over time.
-- Seemingly small changes in environment (e.g. rule changes) can lead to large changes
-  in optimal strategies.  This can produce flaws in conventional wisdom.
-- How do you identify conventional wisdom in different domains?
-- How do you identify the changes that may invalidate conventional wisdom.
 
 
 Other Alternative Strategies

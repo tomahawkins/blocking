@@ -45,45 +45,13 @@ main = do
       report'' "Combined advantage gained by 3 blockers      " gainAdvantage b3
       putStrLn ""
 
-swapTeams :: Match -> Match
-swapTeams a = case a of
-  a : b : c -> a : set b : swapTeams c
-  a -> a
-  where
-  set :: Set -> Set
-  set (Set a b) = Set (map volley a) $ team b
-
-  volley :: Volley -> Volley
-  volley (Volley a b) = Volley (team a) $ map attack b
-
-  attack :: Attack -> Attack
-  attack (Attack a b) = Attack (team a) b
-
-  team :: Team -> Team
-  team A = B
-  team B = A
-
-data Volley' = Volley' Team [Attack] Team deriving Show
-
-parseVolleys' :: String -> [Volley']
-parseVolleys' = concatMap volleys' . swapTeams . parseMatch
-  where
-  volleys' :: Set -> [Volley']
-  volleys' (Set a w) = f a
-    where
-    f :: [Volley] -> [Volley']
-    f a = case a of
-      [] -> []
-      Volley a b : []                    -> Volley' a b w : []
-      Volley a b : d@(Volley c _) : rest -> Volley' a b c : f (d : rest)
-
 data Block = Block Team Int Bool
 
 parseBlocks :: String -> [Block]
-parseBlocks = concatMap blockOutcomes . parseVolleys'
+parseBlocks = concatMap blockOutcomes . concat . parseMatch
 
-blockOutcomes :: Volley' -> [Block]
-blockOutcomes (Volley' _ a winner) = f a
+blockOutcomes :: Volley -> [Block]
+blockOutcomes (Volley _ a winner) = f a
   where
   f a = case a of
     [] -> []
@@ -105,8 +73,6 @@ b0  (Block _ a _) = a == 0
 b1  (Block _ a _) = a == 1
 b2  (Block _ a _) = a == 2
 b3  (Block _ a _) = a == 3
-b01 (Block _ a _) = a == 0 || a == 1
-b12 (Block _ a _) = a == 1 || a == 2
 teamA (Block a _ _) = a == A
 teamB (Block a _ _) = a == B
 
