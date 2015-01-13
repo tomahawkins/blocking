@@ -12,7 +12,7 @@ type Match   = [Set]                                     -- A match is a list of
 type Set     = [Volley]                                  -- A set is a sequence of volleys.
 data Volley' = Volley' Team [Attack]      deriving Show  -- A volley is a side that serves and a sequence of attacks.
 data Volley  = Volley  Team [Attack] Team deriving Show  -- A volley is a side that serves, a sequence of attacks, and who wins.
-data Attack  = Attack  Team Int           deriving Show  -- Attacking side an number of opposing blockers.
+data Attack  = Attack  Team Int Bool      deriving Show  -- Attacking side, number of opposing blockers, and if attack is on 2nd touch.
 data Team    = A | B                      deriving (Show, Eq)  -- Team A or side B.
 
 parseMatch :: String -> Match
@@ -30,7 +30,7 @@ swapTeams a = case a of
   volley (Volley a b c) = Volley (team a) (map attack b) (team c)
 
   attack :: Attack -> Attack
-  attack (Attack a b) = Attack (team a) b
+  attack (Attack a b c) = Attack (team a) b c
 
   team :: Team -> Team
   team A = B
@@ -103,8 +103,8 @@ Attacks :: { [Attack] }
 | Attacks Attack { $1 ++ [$2] }
 
 Attack :: { Attack }
-: Team     Blockers { Attack $1 $2 }
-| Team ";" Blockers { Attack $1 $3 }  -- Attack on 2.
+: Team     Blockers { Attack $1 $2 False }
+| Team ";" Blockers { Attack $1 $3 True  }  -- Attack on 2.
 
 Blockers :: { Int }
 : "0" { 0 }

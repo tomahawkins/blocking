@@ -7,8 +7,6 @@ import Text.Printf
 import Match
 import Touches
 
-type Condition = Block -> Bool
-
 main :: IO ()
 main = do
   args <- getArgs
@@ -44,8 +42,11 @@ main = do
       report'' "Combined advantage gained by 2 blockers      " gainAdvantage b2
       report'' "Combined advantage gained by 3 blockers      " gainAdvantage b3
       putStrLn ""
+      report'' "Combined advantage from attack on 2nd touch  " offenseGainsAdvantage attackOn2
+      putStrLn ""
 
-data Block = Block Team Int Bool
+data Block = Block Team Int Bool Bool
+type Condition = Block -> Bool
 
 parseBlocks :: String -> [Block]
 parseBlocks = concatMap blockOutcomes . concat . parseMatch
@@ -55,8 +56,8 @@ blockOutcomes (Volley _ a winner) = f a
   where
   f a = case a of
     [] -> []
-    [Attack side n] -> [Block (other side) n $ xor side winner]
-    Attack side n : a@(Attack side' _) : rest -> Block (other side) n (xor side side') : f (a : rest)
+    [Attack side n d] -> [Block (other side) n (xor side winner) d]
+    Attack side n d : a@(Attack side' _ _) : rest -> Block (other side) n (xor side side') d : f (a : rest)
   other a = case a of
     A -> B
     B -> A
@@ -68,13 +69,15 @@ blockOutcomes (Volley _ a winner) = f a
 report :: [[Block]] -> String -> Condition -> Condition -> IO ()
 report blocks msg a b = putStrLn $ msg ++ " : " ++ intercalate " " [ printf "%3.0f%% (%3d)" (percentage blocks a b) (sampleSize blocks b) | blocks <- blocks ]
 
-gainAdvantage (Block _ _ a) = a
-b0  (Block _ a _) = a == 0
-b1  (Block _ a _) = a == 1
-b2  (Block _ a _) = a == 2
-b3  (Block _ a _) = a == 3
-teamA (Block a _ _) = a == A
-teamB (Block a _ _) = a == B
+gainAdvantage (Block _ _ a _) = a
+b0            (Block _ a _ _) = a == 0
+b1            (Block _ a _ _) = a == 1
+b2            (Block _ a _ _) = a == 2
+b3            (Block _ a _ _) = a == 3
+teamA         (Block a _ _ _) = a == A
+teamB         (Block a _ _ _) = a == B
+attackOn2     (Block _ _ _ a) = a
+offenseGainsAdvantage (Block _ _ a _) = not a
 
 and' :: Condition -> Condition -> Condition
 and' a b x = a x && b x
