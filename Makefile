@@ -7,7 +7,9 @@ all: blocking
 	  tampa-fortsmith-2014.match \
 	  tampa-sw-minn-2014.match \
 	  penn-stanford-2014.match \
-	  penn-byu-2014.match
+	  penn-byu-2014.match \
+	  hawaii-stanford-1987.match \
+	  japan-ussr-1964.match
 
 Match.hs: Match.y
 	happy Match.y
