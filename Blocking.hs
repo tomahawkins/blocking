@@ -1,6 +1,5 @@
 module Main (main) where
 
-import Data.List
 import System.Environment
 import Text.Printf
 
@@ -24,32 +23,15 @@ main = do
       report "Advantage of touched blocks" advantage touched
       report "Advantage of missed  blocks" advantage missed
     files -> do
-      blocks <- mapM readFile files >>= return . map parseBlocks
-      let report'  = report blocks
-      let report'' = report [concat blocks]
-      report' "Team A   advantage gained by 0 blockers      " gainAdvantage (b0  `and'` teamA)
-      report' "Team A   advantage gained by 1 blockers      " gainAdvantage (b1  `and'` teamA)
-      report' "Team A   advantage gained by 2 blockers      " gainAdvantage (b2  `and'` teamA)
-      report' "Team A   advantage gained by 3 blockers      " gainAdvantage (b3  `and'` teamA)
-      putStrLn ""
-      report' "Team B   advantage gained by 0 blockers      " gainAdvantage (b0  `and'` teamB)
-      report' "Team B   advantage gained by 1 blockers      " gainAdvantage (b1  `and'` teamB)
-      report' "Team B   advantage gained by 2 blockers      " gainAdvantage (b2  `and'` teamB)
-      report' "Team B   advantage gained by 3 blockers      " gainAdvantage (b3  `and'` teamB)
-      putStrLn ""
-      report'' "Combined advantage gained by 0 blockers      " gainAdvantage b0
-      report'' "Combined advantage gained by 1 blockers      " gainAdvantage b1
-      report'' "Combined advantage gained by 2 blockers      " gainAdvantage b2
-      report'' "Combined advantage gained by 3 blockers      " gainAdvantage b3
-      putStrLn ""
-      report'' "Combined advantage from attack on 2nd touch  " offenseGainsAdvantage attackOn2
-      putStrLn ""
+      matches <- flip mapM files $ \ f -> readFile f >>= return . parseMatch
+      mapM_ reportMatch matches
+      reportCombined matches
 
-data Block = Block Team Int Bool Bool
+data Block = Block Team Int Bool Bool  -- Blocking team, number of blockers, if the block gained the advantage, attack on 2.
 type Condition = Block -> Bool
 
-parseBlocks :: String -> [Block]
-parseBlocks = concatMap blockOutcomes . concat . parseMatch
+parseBlocks :: [Set] -> [Block]
+parseBlocks sets = concatMap blockOutcomes $ concat sets
 
 blockOutcomes :: Volley -> [Block]
 blockOutcomes (Volley _ a winner) = f a
@@ -66,8 +48,33 @@ blockOutcomes (Volley _ a winner) = f a
     (B, B) -> False
     _ -> True
 
-report :: [[Block]] -> String -> Condition -> Condition -> IO ()
-report blocks msg a b = putStrLn $ msg ++ " : " ++ intercalate " " [ printf "%3.0f%% (%3d)" (percentage blocks a b) (sampleSize blocks b) | blocks <- blocks ]
+report :: [Block] -> String -> Condition -> Condition -> IO ()
+report blocks msg a b = printf "%s : %3.0f%% (%3d)\n" msg (percentage blocks a b) (sampleSize blocks b)
+
+reportMatch :: Match -> IO ()
+reportMatch (Match teamA' teamB' sets) = do
+  printf "%s vs %s\n" teamA' teamB'
+  report blocks (printf "%-10s advantage gained by 0 blockers" teamA') gainAdvantage (b0  `and'` teamA)
+  report blocks (printf "%-10s advantage gained by 1 blockers" teamA') gainAdvantage (b1  `and'` teamA)
+  report blocks (printf "%-10s advantage gained by 2 blockers" teamA') gainAdvantage (b2  `and'` teamA)
+  report blocks (printf "%-10s advantage gained by 3 blockers" teamA') gainAdvantage (b3  `and'` teamA)
+  report blocks (printf "%-10s advantage gained by 0 blockers" teamB') gainAdvantage (b0  `and'` teamB)
+  report blocks (printf "%-10s advantage gained by 1 blockers" teamB') gainAdvantage (b1  `and'` teamB)
+  report blocks (printf "%-10s advantage gained by 2 blockers" teamB') gainAdvantage (b2  `and'` teamB)
+  report blocks (printf "%-10s advantage gained by 3 blockers" teamB') gainAdvantage (b3  `and'` teamB)
+  putStrLn ""
+  where
+  blocks = parseBlocks sets
+
+reportCombined :: [Match] -> IO ()
+reportCombined matches = do
+  report blocks "Combined advantage gained by 0 blockers" gainAdvantage b0
+  report blocks "Combined advantage gained by 1 blockers" gainAdvantage b1
+  report blocks "Combined advantage gained by 2 blockers" gainAdvantage b2
+  report blocks "Combined advantage gained by 3 blockers" gainAdvantage b3
+  putStrLn ""
+  where
+  blocks = parseBlocks $ concat [ sets | Match _ _ sets <- matches ]
 
 gainAdvantage (Block _ _ a _) = a
 b0            (Block _ a _ _) = a == 0
@@ -76,8 +83,8 @@ b2            (Block _ a _ _) = a == 2
 b3            (Block _ a _ _) = a == 3
 teamA         (Block a _ _ _) = a == A
 teamB         (Block a _ _ _) = a == B
-attackOn2     (Block _ _ _ a) = a
-offenseGainsAdvantage (Block _ _ a _) = not a
+--attackOn2     (Block _ _ _ a) = a
+--offenseGainsAdvantage (Block _ _ a _) = not a
 
 and' :: Condition -> Condition -> Condition
 and' a b x = a x && b x

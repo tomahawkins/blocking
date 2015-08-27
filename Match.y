@@ -1,6 +1,6 @@
 {
 module Match
-  ( Match
+  ( Match  (..)
   , Set    (..)
   , Volley (..)
   , Attack (..)
@@ -9,7 +9,7 @@ module Match
   ) where
 }
 
-%name match
+%name sets
 %tokentype { Char }
 %error { parseError }
 
@@ -32,9 +32,9 @@ module Match
 
 %%
 
-Match :: { Match }
-:           { [] }
-| Match Set { $1 ++ [$2] }
+Sets :: { [Set] }
+:          { [] }
+| Sets Set { $1 ++ [$2] }
 
 Set :: { Set }
 : Volleys Win { volleys' $1 $2 }
@@ -71,7 +71,7 @@ Blockers :: { Int }
 
 {
 
-type Match   = [Set]                                     -- A match is a list of sets.
+data Match   = Match String String [Set]                 -- A match is the team names and a list of sets.
 type Set     = [Volley]                                  -- A set is a sequence of volleys.
 data Volley' = Volley' Team [Attack]      deriving Show  -- A volley is a side that serves and a sequence of attacks.
 data Volley  = Volley  Team [Attack] Team deriving Show  -- A volley is a side that serves, a sequence of attacks, and who wins.
@@ -79,9 +79,11 @@ data Attack  = Attack  Team Int Bool      deriving Show  -- Attacking side, numb
 data Team    = A | B                      deriving (Show, Eq)  -- Team A or side B.
 
 parseMatch :: String -> Match
-parseMatch = swapTeams . match . concat . words . unlines . map (takeWhile (/= '#')) . lines
+parseMatch a = Match teamA teamB $ swapTeams $ sets $ concat game
+  where
+  teamA : "vs" : teamB : game = words . unlines . map (takeWhile (/= '#')) $ lines a
 
-swapTeams :: Match -> Match
+swapTeams :: [Set] -> [Set]
 swapTeams a = case a of
   a : b : c -> a : set b : swapTeams c
   a -> a
