@@ -1,10 +1,5 @@
 {
 module Touches (parseTouches) where
-
--- | A list of attacks: (if blockers touched the ball, if outcome gave advantage to blocking team)
-parseTouches :: String -> [(Bool, Bool)]
-parseTouches = match . concat . words . unlines . map (takeWhile (/= '#')) . lines
-
 }
 
 %name match
@@ -60,5 +55,9 @@ parseError :: String -> a
 parseError a = case a of
   [] -> error "Parse error: no tokens left to parse."
   a  -> error $ "Parse error: unexpected token sequence:  " ++ a
+
+-- | A list of attacks: (if blockers touched the ball, if outcome gave advantage to blocking team)
+parseTouches :: String -> [(Bool, Bool)]
+parseTouches = match . concat . words . unlines . map (takeWhile (/= '#')) . lines
 }
 

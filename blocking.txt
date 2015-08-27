@@ -1,15 +1,17 @@
 A Blocking Strategy for Volleyball: Don't
 
-Is blocking more of a risk than an advantage?
+Does blocking present more of a risk than an advantage?
+Does blocking warrant 50% of the defensive team?
 
 
 Possible advantages to not blocking:
 
 - Adds 2 to 3 more defenders to dig.  Lowers floor area for each defender to cover.
 - Blockers don't have time to correct after the ball is hit.  Floor defenders do.
-- Floor defenders can line up a hit, but have a hard time adjusting a hit deflected by a block.
+- Floor defenders can line up a hit, but have a hard time adjusting to a hit deflected by a block.
 - Eliminates touch-out-of-bounds point losses.
   - Eliminates wiping hitting strategy and blockers getting "used".
+- Eliminates returning the ball by a block for the opponents to attack again.
 - Lowers effectiveness of offensives hitting strategies.
   - Nearly all hitting strategies are aimed an undermining blocker, not floor defense.
     - 1s, 31s, slides, cross, shoot, dumps are all designed to catch blockers off guard.
@@ -17,15 +19,15 @@ Possible advantages to not blocking:
     and into the doughnut.  But if the blockers are off the net in floor defense,
     dumps will be less effective.
 - Lowers net incursions.  Blockers have high percentage of net violations.
-- Leniency of 2-hit rules.  First on hard driven balls, now on first team contact.
-    - Gives significant advantage to digging defense.
 - Safety and improved team health.
   - Ankle rolls and finger jams are are primarily caused by blocking.
+- Leniency of 2-hit rules.  First on hard driven balls, now on first team contact.
+    - Gives significant advantage to digging defense.
 
 
 Disadvantages of not blocking:
 
-- Hitters can attack unopposed at the net.
+- Hitters attack unopposed at the net.
 - Setters can intentionally set tight for hitters to hit straight down.
 - Loss of the four hit advantage.
   - Loss of the ability for the block to absorb energy.
@@ -44,7 +46,7 @@ Open Questions:
 - What is the best way to validate/invalidate this theory when the only
   datasets are played with conventional strategies?
 - This analysis is based on the assumption that attacking is an advantage
-  and that future events in a volley are irrelevent.  Is this valid?
+  and that future events in a volley are irrelevant.  Is this valid?
   - What happens when the "advantage" of blocking exceeds 50%?
     Does this imply attacking is no longer an advantage?
 
@@ -54,7 +56,7 @@ Other analysis:
   - Most hits land behind 5 meters from attacker.  Measure this statistic in real games.
     - Some players can hit closer, aka "straight down", but this is uncommon in games.
 - How accurate is setting based on distance from net?
-  - Can a setter consistantly put it close to the net in real games?
+  - Can a setter consistently put it close to the net in real games?
 - Pie slice vs. reaction time:
   - Up close a blockers hand covers a lot of area, but they can't react after the ball is hit.
   - A floor defender covers less area, but they have much more time to react.
