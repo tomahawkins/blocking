@@ -1,6 +1,9 @@
-.PHONY: all
-all: blocking
+.PHONY: touches
+touches: blocking
 	blocking -t *.touch
+
+.PHONY: matches
+matches: blocking
 	blocking \
 	  clarion-iup.match \
 	  tampa-wju-2014.match \
@@ -8,6 +11,11 @@ all: blocking
 	  tampa-sw-minn-2014.match \
 	  penn-stanford-2014.match \
 	  penn-byu-2014.match \
+          byu_hi_concordia_2013.match
+
+.PHONY: historic
+historic: blocking
+	blocking \
 	  hawaii-stanford-1987.match \
 	  japan-ussr-1964.match
 
