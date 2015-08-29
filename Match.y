@@ -1,10 +1,11 @@
 {
 module Match
-  ( Match  (..)
-  , Set    (..)
-  , Volley (..)
-  , Attack (..)
-  , Team   (..)
+  ( Match          (..)
+  , Set            (..)
+  , Volley         (..)
+  , Attack         (..)
+  , AttackLocation (..)
+  , Team           (..)
   , parseMatch
   ) where
 }
@@ -25,6 +26,7 @@ module Match
 "k"           { 'k' }
 "s"           { 's' }
 "w"           { 'w' }
+"m"           { 'm' }
 "0"           { '0' }
 "1"           { '1' }
 "2"           { '2' }
@@ -60,8 +62,19 @@ Attacks :: { [Attack] }
 | Attacks Attack { $1 ++ [$2] }
 
 Attack :: { Attack }
-: Team     Blockers { Attack $1 $2 False }
-| Team ";" Blockers { Attack $1 $3 True  }  -- Attack on 2.
+: Team AttackOnTwo AttackLocation Blockers { Attack $1 $2 $3 $4 }
+
+AttackOnTwo :: { Bool }
+:      { False }
+| ";"  { True  }
+
+AttackLocation :: { Maybe AttackLocation }
+AttackLocation
+  :      { Nothing }
+  | "s"  { Just StrongSide }
+  | "w"  { Just WeakSide   }
+  | "m"  { Just Middle     }
+  | "b"  { Just Backrow    }
 
 Blockers :: { Int }
 : "0" { 0 }
@@ -75,7 +88,8 @@ data Match   = Match String String [Set]                 -- A match is the team 
 type Set     = [Volley]                                  -- A set is a sequence of volleys.
 data Volley' = Volley' Team [Attack]      deriving Show  -- A volley is a side that serves and a sequence of attacks.
 data Volley  = Volley  Team [Attack] Team deriving Show  -- A volley is a side that serves, a sequence of attacks, and who wins.
-data Attack  = Attack  Team Int Bool      deriving Show  -- Attacking side, number of opposing blockers, and if attack is on 2nd touch.
+data Attack  = Attack  Team Bool (Maybe AttackLocation) Int deriving Show  -- Attacking side, attack-on-two, location, number of blockers.
+data AttackLocation = StrongSide | WeakSide | Middle | Backrow deriving Show
 data Team    = A | B                      deriving (Show, Eq)  -- Team A or side B.
 
 parseMatch :: String -> Match
@@ -95,7 +109,7 @@ swapTeams a = case a of
   volley (Volley a b c) = Volley (team a) (map attack b) (team c)
 
   attack :: Attack -> Attack
-  attack (Attack a b c) = Attack (team a) b c
+  attack (Attack a b c d) = Attack (team a) b c d
 
   team :: Team -> Team
   team A = B
