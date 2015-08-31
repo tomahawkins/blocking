@@ -1,3 +1,6 @@
+.PHONY: all
+all: touches matches
+
 .PHONY: touches
 touches: blocking
 	blocking -t *.touch
