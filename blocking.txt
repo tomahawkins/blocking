@@ -10,17 +10,18 @@ All these rule changes gave significant advanage to the floor defense (digging).
 And yet apart from using the direct application of these new rules, little 
 has changed in the overall defensive strategy of the game.
 Are the conventional strategies currently employeed really the optimal ones
-or did these rule changes cause a bifurcation that
-significantly altered the optimal defensive strategy of the game, and in which somehow 
+or did the new rules cause a bifurcation that
+significantly altered the optimal defensive strategy, and in which somehow 
 the volleyball community has missed?
 
 In dynamical systems, bifurcation is a property where a system's dynamic
 topology changes significantly with minor variations in the parameters
 that define the system.  For example, an aircraft will go unstable 
-when its center of mass is shifted too far aft.
-Though I haven't seen it mentioned in liturature as such, but bifurcation
-can also be applied to game theory to describe how optimal strategies can significantly
-change "topology" given subtle variations in the rules (parameters).
+when its center of mass is shifted too far aft; the center of mass being
+a parametric value.
+Though I haven't seen it mentioned in liturature as such, bifurcations
+can also be applied to game theory to describe how optimal strategies can
+radically change "topology" given subtle variations in a game's rules (parameters).
 
 
 
@@ -36,7 +37,7 @@ Possible advantages to not blocking:
 - Blockers don't have time to correct after the ball is hit.  Floor defenders do.
 - Floor defenders can line up a hit, but have a hard time adjusting to a hit deflected by a block.
 - Eliminates touch-out-of-bounds point losses.
-  - Eliminates wiping hitting strategy and blockers getting "used".
+  - Eliminates wiping hitting strategy and blockers getting tooled.
 - Eliminates returning the ball by a block for the opponents to attack again.
 - Lowers effectiveness of offensives hitting strategies.
   - Nearly all hitting strategies are aimed an undermining blocker, not floor defense.
@@ -92,6 +93,8 @@ Links:
 
 - http://junior-volleyball.blogspot.com/2013/06/to-block-or-not-to-block.html
 - http://coachingvb.com/how-important-is-blocking/
+- http://volleytalk.proboards.com/thread/54126/blocking-correlated-winning
+- http://www.collegian.psu.edu/sports/men_volleyball/article_ce9387ee-92b9-11e3-86aa-0017a43b2370.html
 - http://volleymetrics.blogspot.com
 
 
