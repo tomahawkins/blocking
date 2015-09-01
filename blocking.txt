@@ -24,11 +24,13 @@ can also be applied to game theory to describe how optimal strategies can
 radically change "topology" given subtle variations in a game's rules (parameters).
 
 
+Spectrum between conventional blocking strategy and non-blocking defense.  What is optimal?
+- Random or no blocks for backrow attacks.
+- Only one blocker in the middle.
+- Only one blocker for outside attacks.  Don't move MB over to block.
+- Randomly issue single blockers or block only when ball is set tight.
+- Don't block.
 
-A Blocking Strategy for Volleyball: Don't
-
-Does blocking present more of a risk than an advantage?
-Does blocking warrant 50% of the defensive team?
 
 
 Possible advantages to not blocking:
