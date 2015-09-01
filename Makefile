@@ -3,7 +3,13 @@ all: touches matches
 
 .PHONY: touches
 touches: blocking
-	blocking -t *.touch
+	blocking -t \
+	  byu-h-final-2013.touch \
+	  byu-h-tam-semi-2013.touch \
+	  clarion-11-11.touch \
+	  clarion-11-8.touch \
+	  concordia-final-2013.touch \
+	  wju-semi-2013.touch
 
 .PHONY: matches
 matches: blocking
@@ -14,7 +20,9 @@ matches: blocking
 	  tampa-sw-minn-2014.match \
 	  penn-stanford-2014.match \
 	  penn-byu-2014.match \
-          byu_hi_concordia_2013.match
+          byu_hi_concordia_2013.match \
+	  edinboro-clarion-2014.match \
+	  cal-clarion-2014.match
 
 .PHONY: historic
 historic: blocking
