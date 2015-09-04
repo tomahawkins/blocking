@@ -18,11 +18,12 @@ matches: blocking
 	  tampa-wju-2014.match \
 	  tampa-fortsmith-2014.match \
 	  tampa-sw-minn-2014.match \
-	  penn-stanford-2014.match \
-	  penn-byu-2014.match \
           byu_hi_concordia_2013.match \
 	  edinboro-clarion-2014.match \
 	  cal-clarion-2014.match
+
+#penn-stanford-2014.match \
+#penn-byu-2014.match \
 
 .PHONY: historic
 historic: blocking

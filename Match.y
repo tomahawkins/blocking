@@ -27,6 +27,7 @@ module Match
 "s"           { 's' }
 "w"           { 'w' }
 "m"           { 'm' }
+"x"           { 'x' }
 "0"           { '0' }
 "1"           { '1' }
 "2"           { '2' }
@@ -35,9 +36,13 @@ module Match
 %%
 
 Sets :: { [Set] }
-:          { [] }
-| Sets Set { $1 ++ [$2] }
+:                { [] }
+| Set Sets1      { $1 : $2 }
 
+Sets1 :: { [Set] }
+:               { [] }
+| Set Sets      { swapVolleys $1 : $2 }
+ 
 Set :: { Set }
 : Volleys Win { volleys' $1 $2 }
 
@@ -51,11 +56,12 @@ Team :: { Team }
 | "k" { B }
 
 Volleys :: { [Volley'] }
-:                { [] }
-| Volleys Volley { $1 ++ [$2] }
+:                 { [] }
+| Volleys Volley  { $1 ++ [$2] }
 
 Volley :: { Volley' }
-: Team "s" Attacks "." { Volley' $1 $3 }
+: Team "s" Attacks "."         { Volley' $1 $3 False }
+| Team "s" Attacks "." "x" "." { Volley' $1 $3 True  }
 
 Attacks :: { [Attack] }
 :                { [] }
@@ -86,7 +92,7 @@ Blockers :: { Int }
 
 data Match   = Match String String [Set]                 -- A match is the team names and a list of sets.
 type Set     = [Volley]                                  -- A set is a sequence of volleys.
-data Volley' = Volley' Team [Attack]      deriving Show  -- A volley is a side that serves and a sequence of attacks.
+data Volley' = Volley' Team [Attack] Bool deriving Show  -- A volley is a side that serves and a sequence of attacks and if the teams swich sides after volley.
 data Volley  = Volley  Team [Attack] Team deriving Show  -- A volley is a side that serves, a sequence of attacks, and who wins.
 data Attack  = Attack  Team Bool (Maybe AttackLocation) Int deriving Show  -- Attacking side, attack-on-two, location, number of blockers.
 data AttackLocation = StrongSide | WeakSide | Middle | Backrow deriving Show
@@ -99,12 +105,19 @@ parseMatch a = Match teamA teamB $ swapTeams $ sets $ concat game
 
 swapTeams :: [Set] -> [Set]
 swapTeams a = case a of
-  a : b : c -> a : set b : swapTeams c
-  a -> a
-  where
-  set :: Set -> Set
-  set = map volley
+  [a]             -> [a]
+  [a, b]          -> [a, swapSet b]
+  [a, b, c]       -> [a, swapSet b, c]
+  [a, b, c, d]    -> [a, swapSet b, c, swapSet d]
+  [a, b, c, d, e] -> [a, swapSet b, c, swapSet d, swapSet e]
+  _ -> error "Too many sets."
 
+swapSet :: Set -> Set
+swapSet = swapVolleys
+
+swapVolleys :: [Volley] -> [Volley]
+swapVolleys = map volley
+  where
   volley :: Volley -> Volley
   volley (Volley a b c) = Volley (team a) (map attack b) (team c)
 
@@ -126,7 +139,7 @@ volleys' a winner = f a
   f :: [Volley'] -> [Volley]
   f a = case a of
     [] -> []
-    Volley' a b : []                     -> Volley a b winner : []
-    Volley' a b : d@(Volley' c _) : rest -> Volley a b c : f (d : rest)
+    Volley' a b _ : []                       -> Volley a b winner : []
+    Volley' a b x : d@(Volley' c _ _) : rest -> Volley a b c : (if x then swapVolleys else id) (f (d : rest))
 
 }
