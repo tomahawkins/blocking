@@ -1,4 +1,57 @@
-Volleyball Rule Changes and the Bifurcation of Defensive Strategy
+Volleyball Rule Changes and the Bifurcation of Optimal Defensive Strategy
+
+  A Possible Unexploited Shift from Blocking to Digging?
+
+
+Blocking has a lot of negative outcomes, some are unperceived by fans:
+- Point losses due to touch-out-of-bounds.
+- Point losses due to blockers getting tooled.  In these cases the block gave addition options to the offense.
+- Point losses due to uncontrollable play resulting from a touched block.
+- Point losses due to net violation by blockers.
+- A block that returns the ball to the opposing team and they are able to reattack.
+- A touched block that creates enough chaos that the blocking team must return a free ball.
+- Attackers coming off a block are less effective than ones that are alreday in position for an attack approach.
+- Blocking presents a injury risk: finger jams and rolled ankles.
+  - The long view: how valuable are strong middle and outside hitters?
+
+Rule changes (circa 2000) gave significant advantage to digging:
+- First 2-hit overhand pass on hard driven ball.
+- Then 2-hit on first team contact.
+- Libero.
+
+Open questions:
+- Did these rule changes move the optimal defensive strategy beyond digging?
+- With better digging, is blocking less advantageous?
+- How does the optimal blocking strategy vary over the spectrum of play; elementary school to mens international?
+- What is the optimal blocking strategy at womens division II?
+  - Is the current conventional strategy sub-optimal?
+    - If so, prime condition to expoit.
+
+Possible reduced blocking strategies:
+- No blocks for backrow attacks.
+- No blocks for off-hits, i.e. missed sets, missed approaches.
+- Limit one blocker in the middle.  OHs cover deflections and dumps.
+- Limit one blocker on the outside.  MB covers deflections and dumps.
+- Issue single blockers only when there is high likelyhood of success, i.e. when ball is set tight.
+- Randomize any of the above.
+- The most radical strategy: Don't block.
+
+Advantages of a reduced blocking defense:
+- Adds more defenders to dig.  Lowers floor area for each defender to cover.
+- Blockers don't have time to correct after the ball is hit.  Floor defenders do.
+- Floor defenders can line up a hit with good accuracy, usually even shortly after the ball leaves the setter's hands.
+  But a touched block introduces a high degree of uncertainty that floor defense can not easily correct for.
+- In division 2, off-hits and backrow attacks have about the same level of energy as a strong jump serve,
+  which floor defense already has a proven track record of quality recoveries.
+- Lowers effectiveness of offensives hitting strategies, since most hitting strategies are
+  aimed an undermining blocker, not floor defense.  Setting dumps in particular.
+
+
+
+
+
+
+
 
 In the late 90s, volleyball's governing body clarified the rules 
 regarding double contact on hard driven balls allowing receiving
@@ -23,21 +76,13 @@ Though I haven't seen it mentioned in liturature as such, bifurcations
 can also be applied to game theory to describe how optimal strategies can
 radically change "topology" given subtle variations in a game's rules (parameters).
 
-
-Spectrum between conventional blocking strategy and non-blocking defense.  What is optimal?
-- Random or no blocks for backrow attacks.
-- Only one blocker in the middle.
-- Only one blocker for outside attacks.  Don't move MB over to block.
-- Randomly issue single blockers or block only when ball is set tight.
-- Don't block.
+Spectrum of level of play, kids in elementary school to mens international.
+How does the optimal blocking strategy change across this spectrum?
 
 
 
-Possible advantages to not blocking:
 
-- Adds 2 to 3 more defenders to dig.  Lowers floor area for each defender to cover.
-- Blockers don't have time to correct after the ball is hit.  Floor defenders do.
-- Floor defenders can line up a hit, but have a hard time adjusting to a hit deflected by a block.
+
 - Eliminates touch-out-of-bounds point losses.
   - Eliminates wiping hitting strategy and blockers getting tooled.
 - Eliminates returning the ball by a block for the opponents to attack again.
