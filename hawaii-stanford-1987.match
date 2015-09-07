@@ -22,10 +22,10 @@ jsk2j2k2.
 ksj2.
 ks.
 jsk2.
-ksj2k2k;0.
+ksj2k2k0.
 ksj2k2k2.
 ksj2k2k2.
-jsk;0.
+jsk0.
 ksj2.
 jsk2.
 ksj2k2.
@@ -35,7 +35,7 @@ jsk2.
 ksj2.
 jsk2j2j2k2.
 ksj1.
-ksj;0k2j2k2j2j2k;2.
+ksj0k2j2k2j2j2k2.
 js.
 ksj2j2k2j2.
 # 7, 7.
@@ -43,7 +43,7 @@ ks.
 ks.
 jsk1j2k2.
 ksj1j2k2.
-jsk2j0k2j2k;2.
+jsk2j0k2j2k2.
 jsk2.
 ksk2.
 ksj1.
@@ -78,7 +78,7 @@ ksj1.
 jsk2k0j2.
 jsk2j2.
 jsk2.
-jsk;0.  # Dump.
+jsk0.  # Dump.
 ksk0.
 ks.
 jsk2.
@@ -170,7 +170,7 @@ ksj2k2j2j2.
 jsk2.
 ksj1.
 jsk2k2.
-jsk1j2k2j;1.
+jsk1j2k2j1.
 ksj2k0j2.
 jsk2j2.
 jsk2j2k0k1.
@@ -200,7 +200,7 @@ kw.
 
 # Set 4.
 ksj2k2j2j2.
-ksj2j;0.   # Hit on 2.
+ksj2j0.   # Hit on 2.
 jsk2j1.
 jsk2k2.
 ksj2k2.
@@ -225,10 +225,10 @@ jsk2.
 ksj1.
 ksk1.
 ksj2k2.
-ksj2k;1.
+ksj2k1.
 js.
 ksj2j2j2.
-ksj;1.
+ksj1.
 kw.
 
 

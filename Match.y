@@ -4,7 +4,7 @@ module Match
   , Set            (..)
   , Volley         (..)
   , Attack         (..)
-  , AttackLocation (..)
+  -- , AttackLocation (..)
   , Team           (..)
   , parseMatch
   ) where
@@ -19,7 +19,6 @@ module Match
 %token
 
 "."           { '.' }
-";"           { ';' }
 "a"           { 'a' }
 "b"           { 'b' }
 "j"           { 'j' }
@@ -27,6 +26,7 @@ module Match
 "s"           { 's' }
 "w"           { 'w' }
 "m"           { 'm' }
+"t"           { 't' }
 "x"           { 'x' }
 "0"           { '0' }
 "1"           { '1' }
@@ -51,8 +51,8 @@ Win :: { Team }
 
 Team :: { Team }
 : "a" { A }
-| "j" { A }
 | "b" { B }
+| "j" { A }
 | "k" { B }
 
 Volleys :: { [Volley'] }
@@ -68,19 +68,19 @@ Attacks :: { [Attack] }
 | Attacks Attack { $1 ++ [$2] }
 
 Attack :: { Attack }
-: Team AttackOnTwo AttackLocation Blockers { Attack $1 $2 $3 $4 }
+: Team Blockers Touch { Attack $1 $2 $3 }
 
-AttackOnTwo :: { Bool }
-:      { False }
-| ";"  { True  }
-
-AttackLocation :: { Maybe AttackLocation }
-AttackLocation
-  :      { Nothing }
-  | "s"  { Just StrongSide }
-  | "w"  { Just WeakSide   }
-  | "m"  { Just Middle     }
-  | "b"  { Just Backrow    }
+-- AttackOnTwo :: { Bool }
+-- :      { False }
+-- | ";"  { True  }
+-- 
+-- AttackLocation :: { Maybe AttackLocation }
+-- AttackLocation
+--   :      { Nothing }
+--   | "s"  { Just StrongSide }
+--   | "w"  { Just WeakSide   }
+--   | "m"  { Just Middle     }
+--   | "b"  { Just Backrow    }
 
 Blockers :: { Int }
 : "0" { 0 }
@@ -88,14 +88,19 @@ Blockers :: { Int }
 | "2" { 2 }
 | "3" { 3 }
 
+Touch :: { Maybe Bool }
+:      { Nothing    }
+| "t"  { Just True  }
+| "m"  { Just False }
+
 {
 
-data Match   = Match String String [Set]                 -- A match is the team names and a list of sets.
-type Set     = [Volley]                                  -- A set is a sequence of volleys.
-data Volley' = Volley' Team [Attack] Bool deriving Show  -- A volley is a side that serves and a sequence of attacks and if the teams swich sides after volley.
-data Volley  = Volley  Team [Attack] Team deriving Show  -- A volley is a side that serves, a sequence of attacks, and who wins.
-data Attack  = Attack  Team Bool (Maybe AttackLocation) Int deriving Show  -- Attacking side, attack-on-two, location, number of blockers.
-data AttackLocation = StrongSide | WeakSide | Middle | Backrow deriving Show
+data Match   = Match String String [Set]                    -- A match is the team names and a list of sets.
+type Set     = [Volley]                                     -- A set is a sequence of volleys.
+data Volley' = Volley' Team [Attack] Bool    deriving Show  -- A volley is a side that serves and a sequence of attacks and if the teams swich sides after volley.
+data Volley  = Volley  Team [Attack] Team    deriving Show  -- A volley is a side that serves, a sequence of attacks, and who wins.
+data Attack  = Attack  Team Int (Maybe Bool) deriving Show  -- Attacking side, number of blockers, optional touch.
+--data AttackLocation = StrongSide | WeakSide | Middle | Backrow deriving Show
 data Team    = A | B                      deriving (Show, Eq)  -- Team A or side B.
 
 parseMatch :: String -> Match
@@ -122,7 +127,7 @@ swapVolleys = map volley
   volley (Volley a b c) = Volley (team a) (map attack b) (team c)
 
   attack :: Attack -> Attack
-  attack (Attack a b c d) = Attack (team a) b c d
+  attack (Attack a b c) = Attack (team a) b c
 
   team :: Team -> Team
   team A = B

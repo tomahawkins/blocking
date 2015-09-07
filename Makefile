@@ -20,7 +20,9 @@ matches: blocking
 	  tampa-sw-minn-2014.match \
           byu_hi_concordia_2013.match \
 	  edinboro-clarion-2014.match \
-	  cal-clarion-2014.match
+	  cal-clarion-2014.match \
+	  hilldale-clarion-2015.match \
+	  gannon-indy-2015.match
 
 #penn-stanford-2014.match \
 #penn-byu-2014.match \
