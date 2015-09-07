@@ -4,7 +4,6 @@ module Match
   , Set            (..)
   , Volley         (..)
   , Attack         (..)
-  -- , AttackLocation (..)
   , Team           (..)
   , parseMatch
   ) where
@@ -68,19 +67,7 @@ Attacks :: { [Attack] }
 | Attacks Attack { $1 ++ [$2] }
 
 Attack :: { Attack }
-: Team Blockers Touch { Attack $1 $2 $3 }
-
--- AttackOnTwo :: { Bool }
--- :      { False }
--- | ";"  { True  }
--- 
--- AttackLocation :: { Maybe AttackLocation }
--- AttackLocation
---   :      { Nothing }
---   | "s"  { Just StrongSide }
---   | "w"  { Just WeakSide   }
---   | "m"  { Just Middle     }
---   | "b"  { Just Backrow    }
+: Team Blockers { Attack $1 $2 }
 
 Blockers :: { Int }
 : "0" { 0 }
@@ -88,19 +75,13 @@ Blockers :: { Int }
 | "2" { 2 }
 | "3" { 3 }
 
-Touch :: { Maybe Bool }
-:      { Nothing    }
-| "t"  { Just True  }
-| "m"  { Just False }
-
 {
 
 data Match   = Match String String [Set]                    -- A match is the team names and a list of sets.
 type Set     = [Volley]                                     -- A set is a sequence of volleys.
 data Volley' = Volley' Team [Attack] Bool    deriving Show  -- A volley is a side that serves and a sequence of attacks and if the teams swich sides after volley.
 data Volley  = Volley  Team [Attack] Team    deriving Show  -- A volley is a side that serves, a sequence of attacks, and who wins.
-data Attack  = Attack  Team Int (Maybe Bool) deriving Show  -- Attacking side, number of blockers, optional touch.
---data AttackLocation = StrongSide | WeakSide | Middle | Backrow deriving Show
+data Attack  = Attack  Team Int              deriving Show  -- Attacking side and number of blockers.
 data Team    = A | B                      deriving (Show, Eq)  -- Team A or side B.
 
 parseMatch :: String -> Match
@@ -127,7 +108,7 @@ swapVolleys = map volley
   volley (Volley a b c) = Volley (team a) (map attack b) (team c)
 
   attack :: Attack -> Attack
-  attack (Attack a b c) = Attack (team a) b c
+  attack (Attack a b) = Attack (team a) b
 
   team :: Team -> Team
   team A = B

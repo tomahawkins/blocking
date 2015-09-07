@@ -27,7 +27,7 @@ main = do
       mapM_ reportMatch matches
       reportCombined matches
 
-data Block = Block Team Int (Maybe Bool) Bool  -- Blocking team, number of blockers, optional touch, if the block gained the advantage.
+data Block = Block Team Int Bool  -- Blocking team, number of blockers, if the block gained the advantage.
 type Condition = Block -> Bool
 
 parseBlocks :: [Set] -> [Block]
@@ -38,8 +38,8 @@ blockOutcomes (Volley _ a winner) = f a
   where
   f a = case a of
     [] -> []
-    [Attack side n t] -> [Block (other side) n t (xor side winner)]
-    Attack side n t : a@(Attack side' _ _) : rest -> Block (other side) n t (xor side side') : f (a : rest)
+    [Attack side n] -> [Block (other side) n (xor side winner)]
+    Attack side n : a@(Attack side' _) : rest -> Block (other side) n (xor side side') : f (a : rest)
   other a = case a of
     A -> B
     B -> A
@@ -83,15 +83,13 @@ reportCombined matches = do
   clarionBlocks = filter teamA (parseBlocks $ concat [ sets | Match "Clarion" _ sets <- matches ])
                ++ filter teamB (parseBlocks $ concat [ sets | Match _ "Clarion" sets <- matches ])
 
-gainAdvantage (Block _ _ _ a) = a
-b0            (Block _ a _ _) = a == 0
-b1            (Block _ a _ _) = a == 1
-b2            (Block _ a _ _) = a == 2
-b3            (Block _ a _ _) = a == 3
-teamA         (Block a _ _ _) = a == A
-teamB         (Block a _ _ _) = a == B
-touched       (Block _ _ a _) = a == Just True
-missed        (Block _ _ a _) = a == Just False
+gainAdvantage (Block _ _ a) = a
+b0            (Block _ a _) = a == 0
+b1            (Block _ a _) = a == 1
+b2            (Block _ a _) = a == 2
+b3            (Block _ a _) = a == 3
+teamA         (Block a _ _) = a == A
+teamB         (Block a _ _) = a == B
 
 and' :: Condition -> Condition -> Condition
 and' a b x = a x && b x
