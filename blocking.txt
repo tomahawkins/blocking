@@ -4,16 +4,14 @@ Volleyball Rule Changes and the Bifurcation of Optimal Defensive Strategy
 
 
 Blocking has a lot of negative outcomes, some are unperceived by fans:
-- A block that contacts (deflects) the ball can lead to:
-  - touch-out-of-bounds point losses,
-  - uncontrollable play of blocking team resulting in a point loss or returning a free ball to opposing team,
-  - returning the ball to the opposing team where they can reattack,
-  - blockers getting tooled (blocking can give additional options to offense).
+- A block that contacts the ball can lead to:
+  - point losses due to unrecoverable touches or deflections,
+  - uncontrollable play forcing a free ball back to the attacking team,
+  - a block that the opposing team can recover and reattack,
 - Point losses due to net violation by blockers.
-- Attackers coming off a block are less effective than ones that are alreday in position for an attack approach.
-  - 2 to 3 additional approach steps increases attack energy by 50-100%.
-- Blocking presents a injury risk: finger jams and rolled ankles.
-  - The long view: how valuable are strong middle and outside hitters?
+- A block can give additional options to the offense, e.g. getting tooled.
+- Attackers coming off a block are less effective than ones that are alreday in position for an attack.
+- Blocking presents a injury risk of finger jams and rolled ankles.
 
 Rule changes (circa 2000) gave significant advantage to digging:
 - First 2-hit overhand pass on hard driven ball.
@@ -21,12 +19,14 @@ Rule changes (circa 2000) gave significant advantage to digging:
 - Libero.
 
 Open questions:
-- Did these rule changes move the optimal defensive strategy beyond digging?
+- Did these rule changes affect the optimal defensive strategy beyond digging?
 - With better digging, is blocking less advantageous?
-- How does the optimal blocking strategy vary over the spectrum of play; elementary school to mens international?
+- How does the optimal blocking strategy vary over the spectrum of play?
 - What is the optimal blocking strategy at womens division II?
-  - Is the current conventional strategy sub-optimal?
-    - If so, prime condition to expoit.
+- Is it possible the current blocking strategy is significantly overvalued?
+  - Can this be exploited?
+  - How can we test if this is the case?
+
 
 Possible reduced blocking strategies:
 - No blocks for backrow attacks.

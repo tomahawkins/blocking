@@ -27,32 +27,57 @@ main = do
       mapM_ reportMatch matches
       reportCombined matches
 
-data Block = Block Team Int Bool  -- Blocking team, number of blockers, if the block gained the advantage.
+data Block = Block
+  { team     :: Team
+  , teamName :: String
+  , blockers :: Int
+  , gainAdvantage
+  , wonPointInVolley
+  , wonPointOnBlock
+  , wonPointOnNextAttack :: Bool
+  }
+
 type Condition = Block -> Bool
 
-parseBlocks :: [Set] -> [Block]
-parseBlocks sets = concatMap blockOutcomes $ concat sets
-
-blockOutcomes :: Volley -> [Block]
-blockOutcomes (Volley _ a winner) = f a
+parseBlocks :: Match -> [Block]
+parseBlocks (Match teamA teamB sets) = concatMap blockOutcomes $ concat sets
   where
-  f a = case a of
-    [] -> []
-    [Attack side n] -> [Block (other side) n (xor side winner)]
-    Attack side n : a@(Attack side' _) : rest -> Block (other side) n (xor side side') : f (a : rest)
-  other a = case a of
-    A -> B
-    B -> A
-  xor a b = case (a, b) of
-    (A, A) -> False
-    (B, B) -> False
-    _ -> True
+  blockOutcomes :: Volley -> [Block]
+  blockOutcomes (Volley _ a winner) = f a
+    where
+    f a = case a of
+      [] -> []
+      [Attack side n] -> [Block
+        { team                 = other side
+        , teamName             = if side == A then teamB else teamA
+        , blockers             = n
+        , gainAdvantage        = xor side winner
+        , wonPointInVolley     = xor side winner
+        , wonPointOnBlock      = xor side winner
+        , wonPointOnNextAttack = False
+        }]
+      Attack side n : a@(Attack side' _) : rest -> Block
+        { team                 = other side
+        , teamName             = if side == A then teamB else teamA
+        , blockers             = n
+        , gainAdvantage        = xor side side'
+        , wonPointInVolley     = xor side winner
+        , wonPointOnBlock      = False
+        , wonPointOnNextAttack = null rest && xor side side' && xor side winner
+        } : f (a : rest)
+    other a = case a of
+      A -> B
+      B -> A
+    xor a b = case (a, b) of
+      (A, A) -> False
+      (B, B) -> False
+      _ -> True
 
 report :: [Block] -> String -> Condition -> Condition -> IO ()
 report blocks msg a b = printf "%s : %3.0f%% (%3d)\n" msg (percentage blocks a b) (sampleSize blocks b)
 
 reportMatch :: Match -> IO ()
-reportMatch (Match teamA' teamB' sets) = do
+reportMatch m@(Match teamA' teamB' _) = do
   printf "%s vs %s\n" teamA' teamB'
   report blocks (printf "%-10s advantage gained by 0 blockers" teamA') gainAdvantage (b0  `and'` teamA)
   report blocks (printf "%-10s advantage gained by 1 blockers" teamA') gainAdvantage (b1  `and'` teamA)
@@ -64,35 +89,51 @@ reportMatch (Match teamA' teamB' sets) = do
   report blocks (printf "%-10s advantage gained by 3 blockers" teamB') gainAdvantage (b3  `and'` teamB)
   putStrLn ""
   where
-  blocks = parseBlocks sets
+  blocks = parseBlocks m
 
 reportCombined :: [Match] -> IO ()
 reportCombined matches = do
-  report clarionBlocks "Combined Clarion advantage gained by 0 blockers" gainAdvantage b0
-  report clarionBlocks "Combined Clarion advantage gained by 1 blockers" gainAdvantage b1
-  report clarionBlocks "Combined Clarion advantage gained by 2 blockers" gainAdvantage b2
-  report clarionBlocks "Combined Clarion advantage gained by 3 blockers" gainAdvantage b3
+  report blocks "Combined Clarion advantage gained by 0 blockers" gainAdvantage (clarion `and'` b0)
+  report blocks "Combined Clarion advantage gained by 1 blockers" gainAdvantage (clarion `and'` b1)
+  report blocks "Combined Clarion advantage gained by 2 blockers" gainAdvantage (clarion `and'` b2)
+  report blocks "Combined Clarion advantage gained by 3 blockers" gainAdvantage (clarion `and'` b3)
   putStrLn ""
   report blocks "Combined (all teams) advantage gained by 0 blockers" gainAdvantage b0
   report blocks "Combined (all teams) advantage gained by 1 blockers" gainAdvantage b1
   report blocks "Combined (all teams) advantage gained by 2 blockers" gainAdvantage b2
   report blocks "Combined (all teams) advantage gained by 3 blockers" gainAdvantage b3
   putStrLn ""
+  report blocks "Combined (all teams) won point on block by 0 blockers" wonPointOnBlock b0
+  report blocks "Combined (all teams) won point on block by 1 blockers" wonPointOnBlock b1
+  report blocks "Combined (all teams) won point on block by 2 blockers" wonPointOnBlock b2
+  report blocks "Combined (all teams) won point on block by 3 blockers" wonPointOnBlock b3
+  putStrLn ""
+  report blocks "Combined (all teams) won point on next attack by 0 blockers" wonPointOnNextAttack b0
+  report blocks "Combined (all teams) won point on next attack by 1 blockers" wonPointOnNextAttack b1
+  report blocks "Combined (all teams) won point on next attack by 2 blockers" wonPointOnNextAttack b2
+  report blocks "Combined (all teams) won point on next attack by 3 blockers" wonPointOnNextAttack b3
+  putStrLn ""
+  report blocks "Combined (all teams) won point on block or next attack by 0 blockers" (wonPointOnBlock `or'` wonPointOnNextAttack) b0
+  report blocks "Combined (all teams) won point on block or next attack by 1 blockers" (wonPointOnBlock `or'` wonPointOnNextAttack) b1
+  report blocks "Combined (all teams) won point on block or next attack by 2 blockers" (wonPointOnBlock `or'` wonPointOnNextAttack) b2
+  report blocks "Combined (all teams) won point on block or next attack by 3 blockers" (wonPointOnBlock `or'` wonPointOnNextAttack) b3
+  putStrLn ""
   where
-  blocks = parseBlocks $ concat [ sets | Match _ _ sets <- matches ]
-  clarionBlocks = filter teamA (parseBlocks $ concat [ sets | Match "Clarion" _ sets <- matches ])
-               ++ filter teamB (parseBlocks $ concat [ sets | Match _ "Clarion" sets <- matches ])
+  blocks = concatMap parseBlocks matches
 
-gainAdvantage (Block _ _ a) = a
-b0            (Block _ a _) = a == 0
-b1            (Block _ a _) = a == 1
-b2            (Block _ a _) = a == 2
-b3            (Block _ a _) = a == 3
-teamA         (Block a _ _) = a == A
-teamB         (Block a _ _) = a == B
+b0 = (== 0) . blockers
+b1 = (== 1) . blockers
+b2 = (== 2) . blockers
+b3 = (== 3) . blockers
+teamA = (== A) . team
+teamB = (== B) . team
+clarion = (== "Clarion") . teamName
 
 and' :: Condition -> Condition -> Condition
 and' a b x = a x && b x
+
+or' :: Condition -> Condition -> Condition
+or' a b x = a x || b x
 
 percentage :: [Block] -> Condition -> Condition -> Double
 percentage blocks a b = 100 * fromIntegral (length a') / fromIntegral (length b')
