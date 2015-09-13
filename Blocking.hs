@@ -74,7 +74,12 @@ parseBlocks (Match teamA teamB sets) = concatMap blockOutcomes $ concat sets
       _ -> True
 
 report :: [Block] -> String -> Condition -> Condition -> IO ()
-report blocks msg a b = printf "%s : %3.0f%% (%3d)\n" msg (percentage blocks a b) (sampleSize blocks b)
+report blocks msg a b = printf "%s : %3.0f%% (%4d / %4d)\n" msg percentage a' b'
+  where
+  a' = length $ filter a $ filter b blocks
+  b' = length $            filter b blocks
+  percentage :: Double
+  percentage = 100 * fromIntegral a' / fromIntegral b'
 
 reportMatch :: Match -> IO ()
 reportMatch m@(Match teamA' teamB' _) = do
@@ -91,33 +96,31 @@ reportMatch m@(Match teamA' teamB' _) = do
   where
   blocks = parseBlocks m
 
+reportTotals :: [Block] -> String -> Condition -> IO ()
+reportTotals blocks msg condition = do
+  report blocks (msg ++ " for 0 blockers for Clarion") condition b0'
+  report blocks (msg ++ " for 1 blockers for Clarion") condition b1'
+  report blocks (msg ++ " for 2 blockers for Clarion") condition b2'
+  report blocks (msg ++ " for 3 blockers for Clarion") condition b3'
+  putStrLn ""
+  report blocks (msg ++ " for 0 blockers for all teams") condition b0
+  report blocks (msg ++ " for 1 blockers for all teams") condition b1
+  report blocks (msg ++ " for 2 blockers for all teams") condition b2
+  report blocks (msg ++ " for 3 blockers for all teams") condition b3
+  putStrLn ""
+
 reportCombined :: [Match] -> IO ()
 reportCombined matches = do
-  report blocks "Combined Clarion advantage gained by 0 blockers" gainAdvantage (clarion `and'` b0)
-  report blocks "Combined Clarion advantage gained by 1 blockers" gainAdvantage (clarion `and'` b1)
-  report blocks "Combined Clarion advantage gained by 2 blockers" gainAdvantage (clarion `and'` b2)
-  report blocks "Combined Clarion advantage gained by 3 blockers" gainAdvantage (clarion `and'` b3)
   putStrLn ""
-  report blocks "Combined (all teams) advantage gained by 0 blockers" gainAdvantage b0
-  report blocks "Combined (all teams) advantage gained by 1 blockers" gainAdvantage b1
-  report blocks "Combined (all teams) advantage gained by 2 blockers" gainAdvantage b2
-  report blocks "Combined (all teams) advantage gained by 3 blockers" gainAdvantage b3
+  putStrLn "Analysis for advantaged gained:"
   putStrLn ""
-  report blocks "Combined (all teams) won point on block by 0 blockers" wonPointOnBlock b0
-  report blocks "Combined (all teams) won point on block by 1 blockers" wonPointOnBlock b1
-  report blocks "Combined (all teams) won point on block by 2 blockers" wonPointOnBlock b2
-  report blocks "Combined (all teams) won point on block by 3 blockers" wonPointOnBlock b3
+  reportTotals blocks "Advantage gained" gainAdvantage
   putStrLn ""
-  report blocks "Combined (all teams) won point on next attack by 0 blockers" wonPointOnNextAttack b0
-  report blocks "Combined (all teams) won point on next attack by 1 blockers" wonPointOnNextAttack b1
-  report blocks "Combined (all teams) won point on next attack by 2 blockers" wonPointOnNextAttack b2
-  report blocks "Combined (all teams) won point on next attack by 3 blockers" wonPointOnNextAttack b3
+  putStrLn "Analysis for points won:"
   putStrLn ""
-  report blocks "Combined (all teams) won point on block or next attack by 0 blockers" (wonPointOnBlock `or'` wonPointOnNextAttack) b0
-  report blocks "Combined (all teams) won point on block or next attack by 1 blockers" (wonPointOnBlock `or'` wonPointOnNextAttack) b1
-  report blocks "Combined (all teams) won point on block or next attack by 2 blockers" (wonPointOnBlock `or'` wonPointOnNextAttack) b2
-  report blocks "Combined (all teams) won point on block or next attack by 3 blockers" (wonPointOnBlock `or'` wonPointOnNextAttack) b3
-  putStrLn ""
+  reportTotals blocks "Points won from block" wonPointOnBlock
+  reportTotals blocks "Points won from attack after block" wonPointOnNextAttack
+  reportTotals blocks "Points won from block or attack after block" (wonPointOnBlock `or'` wonPointOnNextAttack)
   where
   blocks = concatMap parseBlocks matches
 
@@ -125,6 +128,12 @@ b0 = (== 0) . blockers
 b1 = (== 1) . blockers
 b2 = (== 2) . blockers
 b3 = (== 3) . blockers
+
+b0' = b0 `and'` clarion
+b1' = b1 `and'` clarion
+b2' = b2 `and'` clarion
+b3' = b3 `and'` clarion
+
 teamA = (== A) . team
 teamB = (== B) . team
 clarion = (== "Clarion") . teamName
@@ -134,13 +143,4 @@ and' a b x = a x && b x
 
 or' :: Condition -> Condition -> Condition
 or' a b x = a x || b x
-
-percentage :: [Block] -> Condition -> Condition -> Double
-percentage blocks a b = 100 * fromIntegral (length a') / fromIntegral (length b')
-  where
-  b' = filter b blocks
-  a' = filter a b'
-
-sampleSize :: [Block] -> Condition -> Int
-sampleSize blocks a = length $ filter a blocks
 
