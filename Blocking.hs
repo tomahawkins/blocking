@@ -24,6 +24,8 @@ main = do
       report "Advantage of missed  blocks" advantage missed
     files -> do
       matches <- flip mapM files $ \ f -> readFile f >>= return . parseMatch
+      putStrLn "Advantage analysis on individual matches:"
+      putStrLn ""
       mapM_ reportMatch matches
       reportCombined matches
 
@@ -73,8 +75,8 @@ parseBlocks (Match teamA teamB sets) = concatMap blockOutcomes $ concat sets
       (B, B) -> False
       _ -> True
 
-report :: [Block] -> String -> Condition -> Condition -> IO ()
-report blocks msg a b = printf "%s : %3.0f%% (%4d / %4d)\n" msg percentage a' b'
+occurs :: [Block] -> Condition -> Condition -> String
+occurs blocks a b = printf "%3.0f%% (%4d / %4d)" percentage a' b'
   where
   a' = length $ filter a $ filter b blocks
   b' = length $            filter b blocks
@@ -83,44 +85,33 @@ report blocks msg a b = printf "%s : %3.0f%% (%4d / %4d)\n" msg percentage a' b'
 
 reportMatch :: Match -> IO ()
 reportMatch m@(Match teamA' teamB' _) = do
-  printf "%s vs %s\n" teamA' teamB'
-  report blocks (printf "%-10s advantage gained by 0 blockers" teamA') gainAdvantage (b0  `and'` teamA)
-  report blocks (printf "%-10s advantage gained by 1 blockers" teamA') gainAdvantage (b1  `and'` teamA)
-  report blocks (printf "%-10s advantage gained by 2 blockers" teamA') gainAdvantage (b2  `and'` teamA)
-  report blocks (printf "%-10s advantage gained by 3 blockers" teamA') gainAdvantage (b3  `and'` teamA)
-  report blocks (printf "%-10s advantage gained by 0 blockers" teamB') gainAdvantage (b0  `and'` teamB)
-  report blocks (printf "%-10s advantage gained by 1 blockers" teamB') gainAdvantage (b1  `and'` teamB)
-  report blocks (printf "%-10s advantage gained by 2 blockers" teamB') gainAdvantage (b2  `and'` teamB)
-  report blocks (printf "%-10s advantage gained by 3 blockers" teamB') gainAdvantage (b3  `and'` teamB)
+  printf "%s vs %s advantage gained:\n" teamA' teamB'
+  putStrLn $ "  0 blockers:    " ++ teamA' ++ ": " ++ occurs blocks gainAdvantage (b0  `and'` teamA) ++ "    " ++ teamB' ++ ": " ++ occurs blocks gainAdvantage (b0  `and'` teamB)
+  putStrLn $ "  1 blockers:    " ++ teamA' ++ ": " ++ occurs blocks gainAdvantage (b1  `and'` teamA) ++ "    " ++ teamB' ++ ": " ++ occurs blocks gainAdvantage (b1  `and'` teamB)
+  putStrLn $ "  2 blockers:    " ++ teamA' ++ ": " ++ occurs blocks gainAdvantage (b2  `and'` teamA) ++ "    " ++ teamB' ++ ": " ++ occurs blocks gainAdvantage (b2  `and'` teamB)
+  putStrLn $ "  3 blockers:    " ++ teamA' ++ ": " ++ occurs blocks gainAdvantage (b3  `and'` teamA) ++ "    " ++ teamB' ++ ": " ++ occurs blocks gainAdvantage (b3  `and'` teamB)
   putStrLn ""
   where
   blocks = parseBlocks m
 
 reportTotals :: [Block] -> String -> Condition -> IO ()
 reportTotals blocks msg condition = do
-  report blocks (msg ++ " for 0 blockers for Clarion") condition b0'
-  report blocks (msg ++ " for 1 blockers for Clarion") condition b1'
-  report blocks (msg ++ " for 2 blockers for Clarion") condition b2'
-  report blocks (msg ++ " for 3 blockers for Clarion") condition b3'
+  putStrLn $ msg ++ ":"
+  putStrLn $ "  0 blockers:    all teams: " ++ f b0 ++ "    Clarion: " ++ f b0'
+  putStrLn $ "  1 blockers:    all teams: " ++ f b1 ++ "    Clarion: " ++ f b1'
+  putStrLn $ "  2 blockers:    all teams: " ++ f b2 ++ "    Clarion: " ++ f b2'
+  putStrLn $ "  3 blockers:    all teams: " ++ f b3 ++ "    Clarion: " ++ f b3'
   putStrLn ""
-  report blocks (msg ++ " for 0 blockers for all teams") condition b0
-  report blocks (msg ++ " for 1 blockers for all teams") condition b1
-  report blocks (msg ++ " for 2 blockers for all teams") condition b2
-  report blocks (msg ++ " for 3 blockers for all teams") condition b3
-  putStrLn ""
+  where
+  f = occurs blocks condition
 
 reportCombined :: [Match] -> IO ()
 reportCombined matches = do
   putStrLn ""
-  putStrLn "Analysis for advantaged gained:"
-  putStrLn ""
   reportTotals blocks "Advantage gained" gainAdvantage
-  putStrLn ""
-  putStrLn "Analysis for points won:"
-  putStrLn ""
-  reportTotals blocks "Points won from block" wonPointOnBlock
-  reportTotals blocks "Points won from attack after block" wonPointOnNextAttack
-  reportTotals blocks "Points won from block or attack after block" (wonPointOnBlock `or'` wonPointOnNextAttack)
+  reportTotals blocks "Point won from block" wonPointOnBlock
+  reportTotals blocks "Point won from attack after block" wonPointOnNextAttack
+  reportTotals blocks "Point won from block or attack after block" (wonPointOnBlock `or'` wonPointOnNextAttack)
   where
   blocks = concatMap parseBlocks matches
 

@@ -33,6 +33,10 @@ historic: blocking
 	  hawaii-stanford-1987.match \
 	  japan-ussr-1964.match
 
+.PHONY: mens
+mens: blocking
+	blocking rus-bra-2012.match
+
 Match.hs: Match.y
 	happy Match.y
 
