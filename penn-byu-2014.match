@@ -16,9 +16,9 @@ asb1.
 as.
 asb2.
 asb2.
-bsa;0.
+bsa0.
 asa2.
-asb;0b2b1b2a;1.
+asb0b2b1b2a1.
 bsa2a1b0a2.
 asb1a2a2.
 asb3.
@@ -33,7 +33,7 @@ asb1.
 bsa2.
 asb1.
 bsa2.
-bsa2b;1.
+bsa2b1.
 asb1.
 bs.
 bs.
@@ -68,14 +68,14 @@ bsa1.
 bsa1.
 asb2a0b2.
 asb2a2.
-asb;2.
+asb2.
 asb2b2.
 bsa2.
 asb2a1.
 # Byu 12, 8
 asb2a2.
 as.
-bsa;1b2.
+bsa1b2.
 bsb2a2.
 bsb2a2a0a2.
 asb2b2.
@@ -88,10 +88,10 @@ asb2.
 bsa2.
 bsa2.
 asb2a2a2.  # Awesome dig.
-asb;0b2.
+asb0b2.
 bsa2b1.
 bsa2b2a1.
-asb2b;0.   # Hit!
+asb2b0.   # Hit!
 bsa1b2a2b2.
 # Penn 20, 20.
 bsa2.
@@ -123,7 +123,7 @@ asb2.
 asb2.
 bsa2b2a2.
 asb1.
-asb2a;0b2a2.
+asb2a0b2a2.
 bsa2b2a2.
 as.
 # Penn 13, 7
@@ -140,7 +140,7 @@ asb2.
 bsa2.
 bsa2a2.
 asb2a2.
-asb;0a2.
+asb0a2.
 bsa2.
 asb2.
 bsa2a2.

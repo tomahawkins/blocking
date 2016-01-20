@@ -18,7 +18,7 @@ matches: blocking
 	  tampa-wju-2014.match \
 	  tampa-fortsmith-2014.match \
 	  tampa-sw-minn-2014.match \
-          byu_hi_concordia_2013.match \
+	  byu_hi_concordia_2013.match \
 	  edinboro-clarion-2014.match \
 	  cal-clarion-2014.match \
 	  hilldale-clarion-2015.match \
