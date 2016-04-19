@@ -1,3 +1,15 @@
+# Judicial Blocking Strategy, Tactics, and Analysis
+
+If a team selectively blocks only in situtations that have a higher than normal
+outcome for sucess, i.e. scoring a point from the block,
+how would this alter a team's overall performance?
+
+What situations would meet the condition of "higher than normal" and what is the threshold?
+
+
+## Can reducing blocks to 
+
+
 Volleyball Rule Changes and the Bifurcation of Optimal Defensive Strategy
 
   A Possible Unexploited Shift from Blocking to Digging?
@@ -27,13 +39,17 @@ Open questions:
   - Can this be exploited?
   - How can we test if this is the case?
 
+# Judicial Blocking Tactics
 
-Possible reduced blocking strategies:
 - No blocks for backrow attacks.
 - No blocks for off-hits, i.e. missed sets, missed approaches.
 - Limit one blocker in the middle.  OHs cover deflections and dumps.
 - Limit one blocker on the outside.  MB covers deflections and dumps.
 - Issue single blockers only when there is high likelyhood of success, i.e. when ball is set tight.
+- Dispatch limited blockers on a bad pass.
+  - If set if behind 10-foot line, chances are it can only go effectly to the outside (left or right
+    depending on the set location).  Therefore only put 1 blocker on the outside, and
+    have the other two players drop back to get ready for the attack.
 - Randomize any of the above.
 - The upper bound strategy: Don't block.
 

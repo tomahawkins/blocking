@@ -3,7 +3,7 @@ all: touches matches
 
 .PHONY: touches
 touches: blocking
-	blocking -t \
+	./blocking -t \
 	  byu-h-final-2013.touch \
 	  byu-h-tam-semi-2013.touch \
 	  clarion-11-11.touch \
@@ -13,7 +13,7 @@ touches: blocking
 
 .PHONY: matches
 matches: blocking
-	blocking \
+	./blocking \
 	  clarion-iup.match \
 	  tampa-wju-2014.match \
 	  tampa-fortsmith-2014.match \
@@ -29,13 +29,13 @@ matches: blocking
 
 .PHONY: historic
 historic: blocking
-	blocking \
+	./blocking \
 	  hawaii-stanford-1987.match \
 	  japan-ussr-1964.match
 
 .PHONY: mens
 mens: blocking
-	blocking rus-bra-2012.match
+	./blocking rus-bra-2012.match
 
 Match.hs: Match.y
 	happy Match.y
